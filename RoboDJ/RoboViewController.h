@@ -10,6 +10,17 @@
 
 @interface RoboViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UISlider *mixerSlider;
+
+- (IBAction)mixerSliderValueChanged:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *volumeALabel;
+@property (weak, nonatomic) IBOutlet UILabel *volumeBLabel;
+
+
+
+- (IBAction)playIntrosSyncedButtonPressed:(id)sender;
+
 - (IBAction)playAButtonPressed:(id)sender;
 - (IBAction)playBButtonPressed:(id)sender;
 
