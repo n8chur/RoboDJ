@@ -21,7 +21,25 @@
 		46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EC14E72442003B6AF1 /* Say.mp3 */; };
 		46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128EE14E7257D003B6AF1 /* AVFoundation.framework */; };
 		46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128F214E728F4003B6AF1 /* CoreMedia.framework */; };
+		AE07132D14E7304500259168 /* libCocoaLibSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE07132914E7302B00259168 /* libCocoaLibSpotify.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE07132814E7302B00259168 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 50AF49DC1439CBFE00E4A5EF;
+			remoteInfo = CocoaLibSpotify;
+		};
+		AE07132B14E7303E00259168 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 50AF49DB1439CBFE00E4A5EF;
+			remoteInfo = CocoaLibSpotify;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		46EE00F814E71A5B00299BD8 /* RoboDJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoboDJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +63,7 @@
 		46F128EC14E72442003B6AF1 /* Say.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Say.mp3; sourceTree = "<group>"; };
 		46F128EE14E7257D003B6AF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		46F128F214E728F4003B6AF1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaLibSpotify iOS Library.xcodeproj"; path = "../../Desktop/cocoalibspotify/iOS Library/CocoaLibSpotify iOS Library.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE07132D14E7304500259168 /* libCocoaLibSpotify.a in Frameworks */,
 				46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */,
 				46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */,
 				46EE00FD14E71A5B00299BD8 /* UIKit.framework in Frameworks */,
@@ -70,6 +90,7 @@
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
 				46EE00F914E71A5B00299BD8 /* Products */,
+				AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +151,14 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
+		AE07132214E7302B00259168 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE07132914E7302B00259168 /* libCocoaLibSpotify.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,6 +173,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AE07132C14E7303E00259168 /* PBXTargetDependency */,
 			);
 			name = RoboDJ;
 			productName = RoboDJ;
@@ -169,12 +199,28 @@
 			mainGroup = 46EE00ED14E71A5B00299BD8;
 			productRefGroup = 46EE00F914E71A5B00299BD8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AE07132214E7302B00259168 /* Products */;
+					ProjectRef = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				46EE00F714E71A5B00299BD8 /* RoboDJ */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AE07132914E7302B00259168 /* libCocoaLibSpotify.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLibSpotify.a;
+			remoteRef = AE07132814E7302B00259168 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		46EE00F614E71A5B00299BD8 /* Resources */ = {
@@ -204,6 +250,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AE07132C14E7303E00259168 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLibSpotify;
+			targetProxy = AE07132B14E7303E00259168 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		46EE010514E71A5B00299BD8 /* InfoPlist.strings */ = {
