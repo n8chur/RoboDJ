@@ -1,14 +1,14 @@
 //
-//  ViewController.m
+//  RoboViewController.m
 //  RoboDJ
 //
 //  Created by Westin Newell on 2/11/12.
 //  Copyright (c) 2012 n8chur. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "RoboViewController.h"
 
-@implementation ViewController
+@implementation RoboViewController
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad

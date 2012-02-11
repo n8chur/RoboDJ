@@ -15,6 +15,8 @@
 		46EE010D14E71A5B00299BD8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE010C14E71A5B00299BD8 /* AppDelegate.m */; };
 		46EE011014E71A5B00299BD8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */; };
 		46EE011314E71A5B00299BD8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE011214E71A5B00299BD8 /* ViewController.m */; };
+		46F128E114E71D45003B6AF1 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */; };
+		46F128E614E722A3003B6AF1 /* RoboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128E514E722A3003B6AF1 /* RoboViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,10 @@
 		46EE010F14E71A5B00299BD8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		46EE011114E71A5B00299BD8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		46EE011214E71A5B00299BD8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
+		46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyViewController.m; sourceTree = "<group>"; };
+		46F128E414E722A3003B6AF1 /* RoboViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoboViewController.h; sourceTree = "<group>"; };
+		46F128E514E722A3003B6AF1 /* RoboViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoboViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,10 @@
 				46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */,
 				46EE011114E71A5B00299BD8 /* ViewController.h */,
 				46EE011214E71A5B00299BD8 /* ViewController.m */,
+				46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */,
+				46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */,
+				46F128E414E722A3003B6AF1 /* RoboViewController.h */,
+				46F128E514E722A3003B6AF1 /* RoboViewController.m */,
 				46EE010314E71A5B00299BD8 /* Supporting Files */,
 			);
 			path = RoboDJ;
@@ -164,6 +174,8 @@
 				46EE010914E71A5B00299BD8 /* main.m in Sources */,
 				46EE010D14E71A5B00299BD8 /* AppDelegate.m in Sources */,
 				46EE011314E71A5B00299BD8 /* ViewController.m in Sources */,
+				46F128E114E71D45003B6AF1 /* SpotifyViewController.m in Sources */,
+				46F128E614E722A3003B6AF1 /* RoboViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,10 +249,12 @@
 		46EE011714E71A5B00299BD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoboDJ/RoboDJ-Prefix.pch";
 				INFOPLIST_FILE = "RoboDJ/RoboDJ-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -248,10 +262,12 @@
 		46EE011814E71A5B00299BD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoboDJ/RoboDJ-Prefix.pch";
 				INFOPLIST_FILE = "RoboDJ/RoboDJ-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -275,6 +291,7 @@
 				46EE011814E71A5B00299BD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
