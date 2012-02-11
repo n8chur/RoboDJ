@@ -1,0 +1,3 @@
+[submodule "RoboDJ/Dependencies/CocoaLibSpotify"]
+	path = RoboDJ/Dependencies/CocoaLibSpotify
+	url = git://github.com/spotify/cocoalibspotify.git
