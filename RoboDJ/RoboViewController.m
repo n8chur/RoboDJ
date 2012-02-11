@@ -8,6 +8,14 @@
 
 #define kGlobalVolume 0.5f
 
+#define kParadiseStartTime 0.295f
+#define kParadiseIntroTime 30.293f
+#define kParadiseDropTime 60.7943f
+#define kParadiseBridgeTime 90.290f
+
+#define kSayStartTime 0.123f
+#define kSayIntroTime 30.122f
+
 #import "RoboViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
@@ -78,9 +86,8 @@
 }
 
 - (IBAction)mixerSliderValueChanged:(id)sender {
-    Float32 audioPlayerAVolume = self.mixerSlider.value;
-    Float32 audioPlayerBVolume = 1 -self.mixerSlider.value;
-    
+    Float32 audioPlayerAVolume;
+    Float32 audioPlayerBVolume;
     
     Float32 sliderValue = ( self.mixerSlider.value * 10 ) - 5;
     
@@ -92,6 +99,11 @@
     
     self.volumeALabel.text = [NSString stringWithFormat:@"%f.2", audioPlayerAVolume];
     self.volumeBLabel.text = [NSString stringWithFormat:@"%f.2", audioPlayerBVolume];
+}
+
+- (IBAction)playIntrosSyncedButtonPressed:(id)sender {
+    [self.audioPlayerA playAtTime:kParadiseIntroTime];
+    [self.audioPlayerB playAtTime:kSayIntroTime];
 }
 
 - (IBAction)playAButtonPressed:(id)sender {

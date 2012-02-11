@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *volumeBLabel;
 
 
+
+- (IBAction)playIntrosSyncedButtonPressed:(id)sender;
+
 - (IBAction)playAButtonPressed:(id)sender;
 - (IBAction)playBButtonPressed:(id)sender;
 
