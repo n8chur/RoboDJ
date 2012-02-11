@@ -10,4 +10,10 @@
 
 @interface RoboViewController : UIViewController
 
+- (IBAction)playAButtonPressed:(id)sender;
+- (IBAction)playBButtonPressed:(id)sender;
+
+- (IBAction)stopAButtonPressed:(id)sender;
+- (IBAction)stopBButtonPressed:(id)sender;
+
 @end
