@@ -8,13 +8,30 @@
 
 #import "RoboViewController.h"
 
+#import <AVFoundation/AVFoundation.h>
+
+@interface RoboViewController ()
+
+@property (nonatomic, retain) AVAudioPlayer* audioPlayerA;
+@property (nonatomic, retain) AVAudioPlayer* audioPlayerB;
+
+@end
+
 @implementation RoboViewController
+
+@synthesize audioPlayerA = _audioPlayerA;
+@synthesize audioPlayerB = _audioPlayerB;
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
+    [self.audioPlayerA setVolume:0.5f];
+    self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
+    [self.audioPlayerB setVolume:0.5f];
 }
 
 - (void)viewDidUnload
@@ -50,4 +67,20 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+- (IBAction)playAButtonPressed:(id)sender {
+    [self.audioPlayerA play];
+    
+}
+
+- (IBAction)playBButtonPressed:(id)sender {
+    [self.audioPlayerB play];
+}
+
+- (IBAction)stopAButtonPressed:(id)sender {
+    [self.audioPlayerA stop];
+}
+
+- (IBAction)stopBButtonPressed:(id)sender {
+    [self.audioPlayerB stop];
+}
 @end

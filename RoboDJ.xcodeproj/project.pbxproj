@@ -19,6 +19,8 @@
 		46F128E614E722A3003B6AF1 /* RoboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128E514E722A3003B6AF1 /* RoboViewController.m */; };
 		46F128EB14E72419003B6AF1 /* Paradise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EA14E72419003B6AF1 /* Paradise.mp3 */; };
 		46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EC14E72442003B6AF1 /* Say.mp3 */; };
+		46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128EE14E7257D003B6AF1 /* AVFoundation.framework */; };
+		46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128F214E728F4003B6AF1 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		46F128E514E722A3003B6AF1 /* RoboViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoboViewController.m; sourceTree = "<group>"; };
 		46F128EA14E72419003B6AF1 /* Paradise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Paradise.mp3; sourceTree = "<group>"; };
 		46F128EC14E72442003B6AF1 /* Say.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Say.mp3; sourceTree = "<group>"; };
+		46F128EE14E7257D003B6AF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		46F128F214E728F4003B6AF1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */,
+				46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */,
 				46EE00FD14E71A5B00299BD8 /* UIKit.framework in Frameworks */,
 				46EE00FF14E71A5B00299BD8 /* Foundation.framework in Frameworks */,
 				46EE010114E71A5B00299BD8 /* CoreGraphics.framework in Frameworks */,
@@ -78,6 +84,8 @@
 		46EE00FB14E71A5B00299BD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46F128F214E728F4003B6AF1 /* CoreMedia.framework */,
+				46F128EE14E7257D003B6AF1 /* AVFoundation.framework */,
 				46EE00FC14E71A5B00299BD8 /* UIKit.framework */,
 				46EE00FE14E71A5B00299BD8 /* Foundation.framework */,
 				46EE010014E71A5B00299BD8 /* CoreGraphics.framework */,
