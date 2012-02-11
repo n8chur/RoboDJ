@@ -15,26 +15,29 @@
 		46EE010D14E71A5B00299BD8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE010C14E71A5B00299BD8 /* AppDelegate.m */; };
 		46EE011014E71A5B00299BD8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */; };
 		46EE011314E71A5B00299BD8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE011214E71A5B00299BD8 /* ViewController.m */; };
-		46F128E114E71D45003B6AF1 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */; };
+		46F128E114E71D45003B6AF1 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		46F128E614E722A3003B6AF1 /* RoboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128E514E722A3003B6AF1 /* RoboViewController.m */; };
 		46F128EB14E72419003B6AF1 /* Paradise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EA14E72419003B6AF1 /* Paradise.mp3 */; };
 		46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EC14E72442003B6AF1 /* Say.mp3 */; };
 		46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128EE14E7257D003B6AF1 /* AVFoundation.framework */; };
 		46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128F214E728F4003B6AF1 /* CoreMedia.framework */; };
-		AE07132D14E7304500259168 /* libCocoaLibSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE07132914E7302B00259168 /* libCocoaLibSpotify.a */; };
+		AEF8B49614E735B300E006B4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49514E735B300E006B4 /* CoreAudio.framework */; };
+		AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49714E735C700E006B4 /* AudioToolbox.framework */; };
+		AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49914E735E200E006B4 /* CFNetwork.framework */; };
+		AEF8B4A714E7378200E006B4 /* libCocoaLibSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B4A314E7375E00E006B4 /* libCocoaLibSpotify.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AE07132814E7302B00259168 /* PBXContainerItemProxy */ = {
+		AEF8B4A214E7375E00E006B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+			containerPortal = AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 50AF49DC1439CBFE00E4A5EF;
 			remoteInfo = CocoaLibSpotify;
 		};
-		AE07132B14E7303E00259168 /* PBXContainerItemProxy */ = {
+		AEF8B4A514E7377F00E006B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+			containerPortal = AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 50AF49DB1439CBFE00E4A5EF;
 			remoteInfo = CocoaLibSpotify;
@@ -63,7 +66,10 @@
 		46F128EC14E72442003B6AF1 /* Say.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Say.mp3; sourceTree = "<group>"; };
 		46F128EE14E7257D003B6AF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		46F128F214E728F4003B6AF1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaLibSpotify iOS Library.xcodeproj"; path = "../../Desktop/cocoalibspotify/iOS Library/CocoaLibSpotify iOS Library.xcodeproj"; sourceTree = "<group>"; };
+		AEF8B49514E735B300E006B4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		AEF8B49714E735C700E006B4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		AEF8B49914E735E200E006B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaLibSpotify iOS Library.xcodeproj"; path = "RoboDJ/Dependencies/CocoaLibSpotify/iOS Library/CocoaLibSpotify iOS Library.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE07132D14E7304500259168 /* libCocoaLibSpotify.a in Frameworks */,
+				AEF8B4A714E7378200E006B4 /* libCocoaLibSpotify.a in Frameworks */,
+				AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */,
+				AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */,
+				AEF8B49614E735B300E006B4 /* CoreAudio.framework in Frameworks */,
 				46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */,
 				46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */,
 				46EE00FD14E71A5B00299BD8 /* UIKit.framework in Frameworks */,
@@ -86,11 +95,14 @@
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
+				AEF8B49914E735E200E006B4 /* CFNetwork.framework */,
+				AEF8B49714E735C700E006B4 /* AudioToolbox.framework */,
+				AEF8B49514E735B300E006B4 /* CoreAudio.framework */,
 				46F128E714E723AD003B6AF1 /* Audio */,
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
 				46EE00F914E71A5B00299BD8 /* Products */,
-				AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */,
+				AEF8B4A414E7376E00E006B4 /* Dependencies */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,12 +163,20 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
-		AE07132214E7302B00259168 /* Products */ = {
+		AEF8B49C14E7375E00E006B4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE07132914E7302B00259168 /* libCocoaLibSpotify.a */,
+				AEF8B4A314E7375E00E006B4 /* libCocoaLibSpotify.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AEF8B4A414E7376E00E006B4 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */,
+			);
+			name = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,7 +193,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				AE07132C14E7303E00259168 /* PBXTargetDependency */,
+				AEF8B4A614E7377F00E006B4 /* PBXTargetDependency */,
 			);
 			name = RoboDJ;
 			productName = RoboDJ;
@@ -201,8 +221,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = AE07132214E7302B00259168 /* Products */;
-					ProjectRef = AE07132114E7302B00259168 /* CocoaLibSpotify iOS Library.xcodeproj */;
+					ProductGroup = AEF8B49C14E7375E00E006B4 /* Products */;
+					ProjectRef = AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -213,11 +233,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AE07132914E7302B00259168 /* libCocoaLibSpotify.a */ = {
+		AEF8B4A314E7375E00E006B4 /* libCocoaLibSpotify.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCocoaLibSpotify.a;
-			remoteRef = AE07132814E7302B00259168 /* PBXContainerItemProxy */;
+			remoteRef = AEF8B4A214E7375E00E006B4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -252,10 +272,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AE07132C14E7303E00259168 /* PBXTargetDependency */ = {
+		AEF8B4A614E7377F00E006B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaLibSpotify;
-			targetProxy = AE07132B14E7303E00259168 /* PBXContainerItemProxy */;
+			targetProxy = AEF8B4A514E7377F00E006B4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
