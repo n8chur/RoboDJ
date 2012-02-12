@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CocoaLibSpotify.h"
+
 @interface SpotifyViewController : UIViewController
+
+@property (nonatomic, retain) SPTrack *track;
+
+- (IBAction)checkTrack:(id)sender;
+- (IBAction)playTrack:(id)sender;
 
 @end

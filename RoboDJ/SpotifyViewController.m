@@ -7,9 +7,11 @@
 //
 
 #import "SpotifyViewController.h"
-#import "CocoaLibSpotify.h"
 
 @implementation SpotifyViewController
+
+@synthesize track = _track;
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -43,15 +45,26 @@
 	};
 	const size_t g_appkey_size = sizeof(g_appkey);
 	
-	NSData *appKey = [NSData dataWithBytes:g_appkey length:g_appkey_size];
-	NSError *error = NULL;
-	[SPSession initializeSharedSessionWithApplicationKey:appKey userAgent:@"com.westinnewell.RobotDJ" error:&error];
-	if (error != NULL) {
-		NSLog(@"Error: %@", [error localizedDescription]);
+	if (![SPSession sharedSession]) {
+		NSData *appKey = [NSData dataWithBytes:g_appkey length:g_appkey_size];
+		NSError *error = NULL;
+		[SPSession initializeSharedSessionWithApplicationKey:appKey userAgent:@"com.westinnewell.RobotDJ" error:&error];
+		if (error != NULL) {
+			NSLog(@"Error: %@", [error localizedDescription]);
+		}
+		NSLog(@"Spotify Session: %@", [SPSession sharedSession]);
 	}
 	
-	SPTrack *track = [SPTrack trackForTrackURL:[NSURL URLWithString:@"http://open.spotify.com/track/22WbYJtuWEHpNmTJnYGpIw"] inSession:[SPSession sharedSession]];
-	NSLog(@"track: %@", track);
+	self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:22WbYJtuWEHpNmTJnYGpIw"]];
+	
+	NSError *error = NULL;
+	[[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error];
+	if (error) {
+		NSLog(@"Preload error: %@", error);
+	}
+	else {
+		NSLog(@"Preload began successfully");
+	}
 }
 
 - (void)viewDidUnload
@@ -85,6 +98,46 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (IBAction)checkTrack:(id)sender
+{
+	NSLog(@"track: %@", self.track);
+
+	if ([self.track isLoaded]) {
+		NSLog(@"track: loaded");		
+	}
+	else {
+		NSLog(@"track: NOT loaded");		
+	}
+	
+	if ([self.track availability] == SP_TRACK_AVAILABILITY_AVAILABLE) {
+		NSLog(@"track: available");		
+	}
+	else if ([self.track availability] == SP_TRACK_AVAILABILITY_UNAVAILABLE) {
+		NSLog(@"track: UNavailable");		
+	}
+	else if ([self.track availability] == SP_TRACK_AVAILABILITY_NOT_STREAMABLE) {
+		NSLog(@"track: not streamable");		
+	}
+	else if ([self.track availability] == SP_TRACK_AVAILABILITY_BANNED_BY_ARTIST) {
+		NSLog(@"track: banned");		
+	}
+	
+	NSLog(@"track: album: %@", [[self.track album] name]);
+}
+
+- (void)playTrack:(id)sender
+{
+	NSError *error = NULL;
+	[[SPSession sharedSession] playTrack:self.track error:&error];
+	
+	if (error) {
+		NSLog(@"Error: %@", [error localizedDescription]);
+	}
+	else {
+		NSLog(@"Success!");
+	}
 }
 
 @end
