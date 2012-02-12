@@ -16,5 +16,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *loginStatusLabel;
 @property (weak, nonatomic) IBOutlet UITextView *queueTextView;
 @property (weak, nonatomic) IBOutlet UILabel *currentSongLabel;
+- (IBAction)skipButtonPressed:(id)sender;
 
 @end

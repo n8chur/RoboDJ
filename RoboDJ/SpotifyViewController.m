@@ -147,6 +147,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)skipButtonPressed:(id)sender {
+    [self.playbackManager setIsPlaying:NO];
+    [self playNextSongInQueue];
+}
+
 - (void)performSearch
 {
     if ( [self.songsInSearchQueue count] != 0 ) {
@@ -290,5 +295,4 @@
 {
 	NSLog(@"didEncounterStreamingError");	
 }
-
 @end
