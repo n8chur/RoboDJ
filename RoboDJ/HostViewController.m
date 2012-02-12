@@ -189,6 +189,11 @@
     
 }
 
+- (void)sendNewPlayist
+{
+    
+}
+
 - (void)combineListAndRequestNewPlaylist:(NSArray*)newClientList
 {
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
@@ -231,6 +236,8 @@
         NSLog(@"No matches!");
     }
     NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
+    
+    
 }
 
 - (void)performSearch
@@ -316,9 +323,8 @@
                 }
             }
             else {
-                NSLog(@"Done finding tracks!");
-                
-                if ( [self.songsPlaylist count] < 5 ) {
+                [self sendNewPlayist];
+                if ( [self.songsPlaylist count] < 25 ) {
                     [self performSearch];
                 }
             }
