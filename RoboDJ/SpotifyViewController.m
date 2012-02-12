@@ -244,6 +244,9 @@
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameTextField.text password:self.passwordTextField.text rememberCredentials:YES];
         
         [textField resignFirstResponder];
+        if ( !self.search.searchInProgress ) {
+            [self performSearch];
+        }
     }
     return NO;
 }
