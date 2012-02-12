@@ -37,9 +37,9 @@
 
 @synthesize usernameTextField = _usernameTextField;
 @synthesize passwordTextField = _passwordTextField;
-@synthesize checkTrackButton = _checkTrackButton;
-@synthesize playTrackButton = _playTrackButton;
 @synthesize loginStatusLabel = _loginStatusLabel;
+@synthesize queueTextView = _queueTextView;
+@synthesize currentSongLabel = _currentSongLabel;
 
 @synthesize songsInSearchQueue = _songsInSearchQueue;
 @synthesize songsPlaylist = _songsPlaylist;
@@ -102,10 +102,10 @@
 {
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
-    [self setCheckTrackButton:nil];
-    [self setPlayTrackButton:nil];
     [self setLoginStatusLabel:nil];
     
+    [self setQueueTextView:nil];
+    [self setCurrentSongLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -151,6 +151,9 @@
     [self.songsPlaylist removeObject:track];
     self.track = [SPTrack trackForTrackURL:track.spotifyURL inSession:[SPSession sharedSession]];
     [self playTrack];
+    
+    self.currentSongLabel.text = [NSString stringWithFormat:@"%@ - %@", [(SPArtist*)[track.artists objectAtIndex:0] name], [track name]];
+    self.queueTextView.text = [NSString stringWithFormat:@"%@",self.songsPlaylist];
 }
 
 - (void)playTrack

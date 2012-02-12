@@ -13,8 +13,8 @@
 @property (retain, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
 
-@property (retain, nonatomic) IBOutlet UIButton *checkTrackButton;
-@property (retain, nonatomic) IBOutlet UIButton *playTrackButton;
 @property (retain, nonatomic) IBOutlet UILabel *loginStatusLabel;
+@property (weak, nonatomic) IBOutlet UITextView *queueTextView;
+@property (weak, nonatomic) IBOutlet UILabel *currentSongLabel;
 
 @end
