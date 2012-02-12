@@ -78,7 +78,6 @@
 	NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataToSend options:0 error:&error];
 	
 	if (jsonData) {
-		NSLog(@"Data (%@) successfully JSONed: size: %d", type, [jsonData length]);
 	}
 	else {
 		NSLog(@"Data (%@) non JSONed. Failed.", type);
@@ -86,7 +85,6 @@
 	}
 	
 	if ([self.session sendDataToAllPeers:jsonData withDataMode:GKSendDataReliable error:&error]) {
-		NSLog(@"Data (%@) successfully sent", type);
 	}
 	else {
 		NSLog(@"Fail to send data (%@): %@", type, [error localizedDescription]);
