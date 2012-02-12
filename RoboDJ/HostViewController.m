@@ -13,6 +13,8 @@
 
 @interface HostViewController () <SPSessionDelegate, SPSessionPlaybackDelegate>
 
+- (void)shuffleMutableArray:(NSMutableArray*)mutableArray;
+
 @property (nonatomic, retain) SPPlaybackManager* playbackManager;
 @property (nonatomic, retain) SPTrack *currentTrack;
 @property (nonatomic, retain) SPSearch *search;
@@ -61,6 +63,24 @@
 @synthesize previouslySearchedTracks = _previouslySearchedTracks;
 @synthesize session = _session;
 
+- (void)shuffleMutableArray:(NSMutableArray*)mutableArray
+{
+    static BOOL seeded = NO;
+    if(!seeded)
+    {
+        seeded = YES;
+        srandom(time(NULL));
+    }
+    
+    NSUInteger count = [mutableArray count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        int nElements = count - i;
+        int n = (random() % nElements) + i;
+        [mutableArray exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+}
+
 
 #pragma mark - View lifecycle
 
@@ -87,13 +107,15 @@
         [self.hostsUserSongs addObject:song];
     }
     
+    [self shuffleMutableArray:self.hostsUserSongs];
+    
     [self addObserver:self forKeyPath:@"search.searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"playbackManager.trackPosition" options:NSKeyValueObservingOptionNew context:nil];
     
     self.playbackManager = [[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
     [[SPSession sharedSession] setDelegate:self];
     
-    for ( NSUInteger i = 0; i < 25; i++ ) {
+    for ( NSUInteger i = 0; i < 100; i++ ) {
         [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:i]];
     }
     self.combinedSongs = [NSMutableArray array];
@@ -222,7 +244,7 @@
             }
         }
     }
-    NSUInteger maxSearchCount = 25;
+    NSUInteger maxSearchCount = 60;
     NSUInteger searchCount = maxSearchCount;
     NSUInteger i = [self.combinedSongs indexOfObject:[self.combinedSongs lastObject]];
     while ( i > 0 ) {
@@ -248,15 +270,17 @@
 {
     if ( [self.songsInSearchQueue count] != 0 ) {
         NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
-        if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
-            [self.previouslySearchedTracks addObject:searchString];
-            self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+        if ( searchString ) {
+            if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
+                [self.previouslySearchedTracks addObject:searchString];
+                self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+            }
+            else {
+                [self performSearch];
+            }
         }
-        else {
-            [self performSearch];
-        }
-        [self.songsInSearchQueue removeObjectAtIndex:0];
         
+        [self.songsInSearchQueue removeObjectAtIndex:0];
     }
 }
 

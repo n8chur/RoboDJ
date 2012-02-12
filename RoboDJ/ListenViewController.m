@@ -23,6 +23,8 @@
 - (void)playNextSongInQueue;
 - (void)playTrack;
 
+- (void)shuffleMutableArray:(NSMutableArray*)mutableArray;
+
 @end
 
 @implementation ListenViewController
@@ -43,6 +45,24 @@
 
 @synthesize serverPeerID = _serverPeerID;
 @synthesize session = _session;
+
+- (void)shuffleMutableArray:(NSMutableArray*)mutableArray
+{
+    static BOOL seeded = NO;
+    if(!seeded)
+    {
+        seeded = YES;
+        srandom(time(NULL));
+    }
+    
+    NSUInteger count = [mutableArray count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        int nElements = count - i;
+        int n = (random() % nElements) + i;
+        [mutableArray exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+}
 
 #pragma mark - View lifecycle
 
@@ -67,6 +87,8 @@
         NSString* song = [NSString stringWithFormat:@"%@ - %@", [mediaItem valueForProperty:MPMediaItemPropertyArtist], [mediaItem valueForProperty:MPMediaItemPropertyTitle]];
         [self.clientUserSongs addObject:song];
     }
+    
+    [self shuffleMutableArray:self.clientUserSongs];
     
     [self addObserver:self forKeyPath:@"playbackManager.trackPosition" options:NSKeyValueObservingOptionNew context:nil];
     
