@@ -113,8 +113,7 @@
 }
 
 - (IBAction)usernameTextFieldDidEndEditing:(id)sender {
-    
-    [self.passwordTextField becomeFirstResponder];
+    [self.usernameTextField resignFirstResponder];
 }
 
 - (IBAction)passwordTextFieldDidEndEditing:(id)sender {

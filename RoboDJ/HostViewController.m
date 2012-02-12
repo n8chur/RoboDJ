@@ -149,7 +149,6 @@
         NSString* song = [NSString stringWithFormat:@"%@ - %@", [mediaItem valueForProperty:MPMediaItemPropertyArtist], [mediaItem valueForProperty:MPMediaItemPropertyTitle]];
         [self.hostsUserSongs addObject:song];
     }
-    
     [self shuffleMutableArray:self.hostsUserSongs];
     
     [self addObserver:self forKeyPath:@"search.searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
@@ -264,10 +263,11 @@
 
 - (void)addSearches
 {
-    for (id object in self.combinedSongs) {
-        for (NSUInteger i = 0; i < [self.combinedSongs countForObject:object]; i++) {
-            [self.songsInSearchQueue addObject:object];
-         }
+    for (id object in self.combinedSongs) { 
+        [self.songsInSearchQueue addObject:object];        
+//        for (NSUInteger i = 0; i < [self.combinedSongs countForObject:object]; i++) {
+//            
+//         }
     }
     [self performSelectorInBackground:@selector(performSearch) withObject:nil];
 }
@@ -401,7 +401,6 @@
                 }
             }
             else {
-                [self sendNewPlayist];
                 if ( [self.songsPlaylist count] < 50 ) {
                     [self performSelectorInBackground:@selector(performSearch) withObject:nil];
                 }
