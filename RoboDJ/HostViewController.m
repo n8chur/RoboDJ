@@ -317,7 +317,7 @@
         if ( self.search.searchInProgress == NO ) {
             if ( [self.search.tracks count] > 0 ) {
                 
-                [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
+                [self.songsPlaylist insertObject:[self.search.tracks objectAtIndex:0] atIndex:0];
                 [self.tableView reloadData];
                 
                 if ( !self.playbackManager.isPlaying ) {
@@ -439,6 +439,11 @@ return YES;
 - (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
 {
 	NSLog(@"connectionWithPeerFailed");
+}
+
+- (void)sessionDidEndPlayback:(id<SPSessionPlaybackProvider>)aSession
+{
+    [self skipButtonPressed:nil];
 }
 
 
