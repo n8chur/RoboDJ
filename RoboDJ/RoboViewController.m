@@ -43,7 +43,7 @@
 
 @property (nonatomic) Float32 mixAmount;
 
-@property (nonatomic) NSTimeInterval timeToPlayNextTrack;
+@property (nonatomic) NSTimeInterval previousTrackDeviceStartTime;
 
 - (void)playAudioPlayerA;
 - (void)playAudioPlayerB;
@@ -70,7 +70,7 @@
 
 @synthesize mixAmount = _mixAmount;
 
-@synthesize timeToPlayNextTrack = _timeToPlayNextTrack;
+@synthesize previousTrackDeviceStartTime = _previousTrackDeviceStartTime;
 
 #pragma mark - View lifecycle
 
@@ -204,8 +204,13 @@
 
 - (void)transitionToB
 {
-    [self.audioPlayerB playAtTime:self.timeToPlayNextTrack];
-    self.timeToPlayNextTrack = self.timeToPlayNextTrack + self.songB.sectionOutro.startTime - self.songB.sectionBuildUp.startTime;
+	NSTimeInterval playerBDeviceStartTime = self.previousTrackDeviceStartTime + self.songA.sectionOutro.startTime;
+	
+	NSLog(@"playerBDeviceStartTime: %f self.audioPlayerA.deviceCurrentTime: %f", playerBDeviceStartTime, self.audioPlayerA.deviceCurrentTime);
+	
+	[self.audioPlayerB setCurrentTime:self.songB.sectionBuildUp.startTime];
+    [self.audioPlayerB playAtTime:playerBDeviceStartTime];
+	
     self.transitionInProgress = YES;
     self.transitionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(transition) userInfo:nil repeats:YES];
 }
@@ -213,8 +218,7 @@
 - (void)audioPlayerACheckTime
 {
     if ( self.transitionInProgress == NO ) {
-        NSTimeInterval delay = 1.0f;
-        if ( self.audioPlayerA.currentTime >= self.songA.sectionOutro.startTime - delay) {
+        if ( (self.songA.sectionOutro.startTime - self.audioPlayerA.currentTime) <= 1.0f ) {
             [self transitionToB];
             [self.audioPlayerATimeCheckTimer invalidate];
         }
@@ -223,16 +227,17 @@
 
 - (void)playAudioPlayerA
 {
-    NSTimeInterval secondsBeforeOutro = self.songA.sectionOutro.startTime - 2.0f;
-    [self.audioPlayerA setCurrentTime:secondsBeforeOutro];
-    [self.audioPlayerA prepareToPlay];
-    NSTimeInterval startTime = self.audioPlayerA.deviceCurrentTime + 0.2f;
-    self.timeToPlayNextTrack = startTime + 2.0f;
-    [self.audioPlayerA playAtTime:startTime];
     
-    [self.audioPlayerB setCurrentTime:self.songB.sectionBuildUp.startTime];
-    [self.audioPlayerB prepareToPlay];
-    
+	NSTimeInterval playerADeviceStartTime = self.audioPlayerA.deviceCurrentTime + 0.2f;
+	NSTimeInterval playerStartTime = self.songA.sectionOutro.startTime - 2.0f;
+	
+	[self.audioPlayerA setCurrentTime: playerStartTime];
+	[self.audioPlayerA playAtTime:playerADeviceStartTime];
+	
+	self.previousTrackDeviceStartTime = playerADeviceStartTime - playerStartTime;
+	
+	NSLog(@"self.previousTrackDeviceStartTime: %f", self.previousTrackDeviceStartTime);
+	    
     self.audioPlayerATimeCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(audioPlayerACheckTime) userInfo:nil repeats:YES];
 }
 
