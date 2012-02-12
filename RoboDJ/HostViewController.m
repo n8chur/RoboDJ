@@ -89,10 +89,10 @@
     [[SPSession sharedSession] setDelegate:self];
     
     for ( NSUInteger i = 0; i < 25; i++ ) {
-        [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:0]];
+        [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:i]];
     }
     
-    self.combinedSongs = [NSMutableDictionary dictionaryWithObjects:self.hostsUserSongs forKeys:[NSArray arrayWithObject:[NSNumber numberWithUnsignedChar:1]]];
+    self.combinedSongs = [NSMutableDictionary dictionaryWithObject:self.hostsUserSongs forKey:[NSArray arrayWithObject:[NSNumber numberWithUnsignedChar:1]]];
     
     self.currentTimeLabel.text = @"0:00";
     self.totalTimeLabel.text = @"0:00";
