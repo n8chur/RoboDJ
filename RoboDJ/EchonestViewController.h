@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EchonestViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
+@interface EchonestViewController : UIViewController <UITextFieldDelegate>
 @property (retain, nonatomic) IBOutlet UITextField *endpointTextField;
 @property (retain, nonatomic) IBOutlet UITextField *parameterTextField;
 @property (retain, nonatomic) IBOutlet UITextField *valueTextField;
+@property (retain, nonatomic) IBOutlet UITextView *responseTextView;
 
 - (IBAction)sendButtonPressed:(id)sender;
 

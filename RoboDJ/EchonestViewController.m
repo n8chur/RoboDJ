@@ -8,22 +8,27 @@
 
 #import "EchonestViewController.h"
 #import "ENAPIRequest.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface EchonestViewController () <ENAPIRequestDelegate>
 
 @property (nonatomic, retain) ENAPIRequest* enapiRequest;
 @property (nonatomic, retain) NSMutableArray* enapiResults;
 
+@property (nonatomic, retain) NSMutableSet* userSongs;
+
 @end
 
 @implementation EchonestViewController
-@synthesize tableView = _tableView;
 @synthesize endpointTextField = _queryTextField;
 @synthesize parameterTextField = _parameterTextField;
 @synthesize valueTextField = _valueTextField;
+@synthesize responseTextView = _responseTextView;
 
 @synthesize enapiRequest = _enapiRequest;
 @synthesize enapiResults = _enapiResults;
+
+@synthesize userSongs = _userSongs;
 
 #pragma mark - View lifecycle
 
@@ -31,7 +36,16 @@
 {
     [super viewDidLoad];
     self.enapiResults = [NSMutableArray array];
+    MPMediaQuery* mediaQuery = [MPMediaQuery songsQuery];
     
+    self.userSongs = [NSMutableArray array];
+    
+    NSArray* tempArray = [mediaQuery items];
+    for ( MPMediaItem* mediaItem in tempArray ) {
+        NSString* song = [NSString stringWithFormat:@"%@ - %@", [mediaItem valueForProperty:MPMediaItemPropertyArtist], [mediaItem valueForProperty:MPMediaItemPropertyTitle]];
+        NSLog(@"song: %@", song);
+        [self.userSongs addObject:song];
+    }
 }
 
 - (void)viewDidUnload
@@ -40,7 +54,7 @@
     [self setEndpointTextField:nil];
     [self setParameterTextField:nil];
     [self setValueTextField:nil];
-    [self setTableView:nil];
+    [self setResponseTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -50,6 +64,7 @@
 {
     self.enapiRequest = nil;
     [self setEnapiResults:nil];
+    self.userSongs = nil;
     [super dealloc];
 }
 
@@ -97,29 +112,6 @@
     [self.endpointTextField resignFirstResponder];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // return the current number of `artist/suggest` results
-    return self.enapiResults.count;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (nil == cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier] autorelease];
-    }
-	// Set up the cell with the artist's name.
-    NSDictionary *artist = [self.enapiResults objectAtIndex:indexPath.row];
-    cell.textLabel.text = [artist valueForKey:self.parameterTextField.text];
-    return cell;
-}
-
 #pragma mark - ENAPIRequestDelegate
 
 - (void)requestFinished:(ENAPIRequest *)request {
@@ -138,14 +130,13 @@
 		[request release];
 		return;
 	}
-    NSArray *artists = [request.response valueForKeyPath:@"response.artists"];
+    NSArray *songs = [request.response valueForKeyPath:@"response.songs"];
     [self.enapiResults removeAllObjects];
-    for (int ii=0; ii<artists.count; ++ii) {
-        [self.enapiResults addObject:[artists objectAtIndex:ii]];        
+    for (int ii=0; ii<songs.count; ++ii) {
+        [self.enapiResults addObject:[songs objectAtIndex:ii]];        
     }
+    self.responseTextView.text = [NSString stringWithFormat: @"%@", [request.response valueForKeyPath:@"response.songs"]];
     self.enapiRequest = nil;
-    NSLog(@"self.enapiResults: %@", self.enapiResults);
-    [self.tableView reloadData];
     [request release];
 }
 

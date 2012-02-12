@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		467E31C814E7D0CD0081FDAB /* BonjourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 467E31C714E7D0CC0081FDAB /* BonjourViewController.m */; };
 		469D3CD614E767C100111F81 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D3C9214E767C100111F81 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		469D3CD714E767C100111F81 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D3C9614E767C100111F81 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		469D3CD814E767C100111F81 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 469D3C9914E767C100111F81 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -84,6 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		467E31C614E7D0CC0081FDAB /* BonjourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BonjourViewController.h; sourceTree = "<group>"; };
+		467E31C714E7D0CC0081FDAB /* BonjourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BonjourViewController.m; sourceTree = "<group>"; };
 		469D3C8E14E767C100111F81 /* libechonest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libechonest-Prefix.pch"; sourceTree = "<group>"; };
 		469D3C9114E767C100111F81 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		469D3C9214E767C100111F81 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -395,6 +398,8 @@
 				46F128E514E722A3003B6AF1 /* RoboViewController.m */,
 				469D3CF314E767F600111F81 /* EchonestViewController.h */,
 				469D3CF414E767F600111F81 /* EchonestViewController.m */,
+				467E31C614E7D0CC0081FDAB /* BonjourViewController.h */,
+				467E31C714E7D0CC0081FDAB /* BonjourViewController.m */,
 				AE67FF0614E7781B00BC312F /* RDJSong.h */,
 				AE67FF0714E7781B00BC312F /* RDJSong.m */,
 				AE67FF0914E7786C00BC312F /* RDJSection.h */,
@@ -564,6 +569,7 @@
 				469D3CF514E767F600111F81 /* EchonestViewController.m in Sources */,
 				AE67FF0814E7781B00BC312F /* RDJSong.m in Sources */,
 				AE67FF0B14E7786D00BC312F /* RDJSection.m in Sources */,
+				467E31C814E7D0CD0081FDAB /* BonjourViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
