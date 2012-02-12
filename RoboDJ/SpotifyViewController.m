@@ -242,6 +242,7 @@
             [self performSearch];
         }
     }
+    self.queueTextView.text = [NSString stringWithFormat:@"%@",self.songsPlaylist];
 }
 
 - (void)sessionDidLosePlayToken:(SPSession *)aSession
