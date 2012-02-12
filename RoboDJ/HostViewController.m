@@ -25,7 +25,7 @@
 
 @property (nonatomic, retain) NSMutableArray *hostsUserSongs;
 
-@property (nonatomic, retain) NSMutableArray *combinedSongs;
+@property (nonatomic, retain) NSCountedSet *combinedSongs;
 
 @property (nonatomic, retain) NSMutableDictionary *likesAndDislikes;
 
@@ -163,7 +163,7 @@
     }
     [self shuffleMutableArray:self.hostsUserSongs];
     
-    self.combinedSongs = [NSMutableArray array];
+    self.combinedSongs = [NSCountedSet set];
     NSMutableSet* set = [NSMutableSet set];
     for ( NSString* string in self.hostsUserSongs ) {
         [set addObject:string];
@@ -262,33 +262,14 @@
     
 }
 
-- (void)sendNewPlayist
-{
-    // send current track (self.playerManager.currentTrack) and current time for client to start (with delay compesnation) (self.playerManager.currentTime?)
-    // client should only take action if the given song is not currently playing
-    // and the new playlist (self.songsPlaylist)
-}
-
 - (void)addSearches
 {
-    NSUInteger maxSearchCount = 60;
-    NSUInteger searchCount = maxSearchCount;
-    NSUInteger i = [self.combinedSongs indexOfObject:[self.combinedSongs lastObject]];
-    while ( i > 0 ) {
-        NSMutableSet* set = [self.combinedSongs objectAtIndex:i];
-        for ( NSString * string in set ) {
-            [self.songsInSearchQueue insertObject:string atIndex:0];
-        }
-        i --;
-        searchCount --;
+    for (id object in self.combinedSongs) {
+        for (NSUInteger i = 0; i < [self.combinedSongs countForObject:object]; i++) {
+            [self.songsInSearchQueue addObject:object];
+         }
     }
-    if ( searchCount == maxSearchCount - 1 ) {
-        [self performSelectorInBackground:@selector(performSearch) withObject:nil];
-    }
-    else {
-        NSLog(@"No matches!");
-    }
-    NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
+    [self performSelectorInBackground:@selector(performSearch) withObject:nil];
 }
 
 - (void)combineListAndRequestNewPlaylist:(NSArray*)newClientList
@@ -296,36 +277,15 @@
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
     // compare self.hostsUserSongs with newClientList
     // return 
-    NSLog(@"count before: %i", [newClientList count]);
+    NSLog(@"count before: %i", [self.combinedSongs count]);
     NSLog(@"Combining with new library (%d songs)", [newClientList count]);
     
-    NSMutableArray* duplicates = [self.combinedSongs mutableCopy];
-    
+    NSLog(@"newClientList: %@", newClientList);    
     for ( NSString* string in newClientList ) {
-        NSInteger arrayIndex = 0;
-        for ( NSMutableSet* set in self.combinedSongs ) {
-            for ( NSString* setString in set ) {
-                if ( [setString isEqualToString:string] ) {
-                    NSMutableSet* duplicateSet = [duplicates objectAtIndex:arrayIndex+1];
-                    if ( duplicateSet == nil ) {
-                        duplicateSet = [NSMutableSet setWithObject:string];
-                        [duplicates addObject:duplicateSet];
-                    }
-                    else {
-                        [duplicateSet addObject:string];
-                    }
-                    break;
-                }
-            }
-            arrayIndex ++;
-        }
+        [self.combinedSongs addObject:string];
     }
     
-    for ( NSString* string in duplicates ) {
-        
-    }
-    
-    NSLog(@"new list combined, count after: %i", [newClientList count]);
+    NSLog(@"count after: %i", [self.combinedSongs count]);
     [self addSearches];
 }
 
@@ -441,7 +401,6 @@
                 }
             }
             else {
-                [self sendNewPlayist];
                 if ( [self.songsPlaylist count] < 10 ) {
                     [self performSelectorInBackground:@selector(performSearch) withObject:nil];
                 }
