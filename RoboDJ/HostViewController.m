@@ -252,7 +252,8 @@
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
     // compare self.hostsUserSongs with newClientList
     // return 
-    
+    NSLog(@"Combining with new library (%d songs)", [newClientList count]);
+	
     for ( NSString* string in newClientList ) {
         for ( NSMutableSet* set in self.combinedSongs ) {
             if ( [set containsObject:string] ) {
@@ -524,6 +525,7 @@ return YES;
 		}
 		else if ([type isEqualToString:@"clientLibrary"]) {
 			NSLog(@"Client library");
+			[self combineListAndRequestNewPlaylist:(NSArray*)object];
 		}
 		else {
 			NSLog(@"Unknown!!!!");
