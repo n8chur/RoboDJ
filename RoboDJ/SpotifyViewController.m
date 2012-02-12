@@ -10,7 +10,12 @@
 
 @implementation SpotifyViewController
 
+@synthesize usernameTextField = _usernameTextField;
+@synthesize passwordTextField = _passwordTextField;
 @synthesize track = _track;
+@synthesize checkTrackButton = _checkTrackButton;
+@synthesize playTrackButton = _playTrackButton;
+@synthesize loginStatusLabel = _loginStatusLabel;
 
 #pragma mark - View lifecycle
 
@@ -57,22 +62,15 @@
 	
 	[[SPSession sharedSession] setDelegate:self];
 	[[SPSession sharedSession] setPlaybackDelegate:self];
-	
-	[[SPSession sharedSession] attemptLoginWithUserName:@"" password:@"" rememberCredentials:YES];
-	
-	self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"]];
-	
-	NSError *error = NULL;
-	if (![[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error]) {
-		NSLog(@"Preload error: %@", error);
-	}
-	else {
-		NSLog(@"Preload began successfully");
-	}
 }
 
 - (void)viewDidUnload
 {
+    [self setUsernameTextField:nil];
+    [self setPasswordTextField:nil];
+    [self setCheckTrackButton:nil];
+    [self setPlayTrackButton:nil];
+    [self setLoginStatusLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -144,11 +142,38 @@
 	}
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ( textField == self.usernameTextField ) {
+        [self.passwordTextField becomeFirstResponder];
+    }
+    else {
+        [[SPSession sharedSession] attemptLoginWithUserName:self.usernameTextField.text password:self.passwordTextField.text rememberCredentials:YES];
+        
+        self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"]];
+        
+        NSError *error = NULL;
+        if (![[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error]) {
+            NSLog(@"Preload error: %@", error);
+        }
+        else {
+            NSLog(@"Preload began successfully");
+        }
+        
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
 #pragma mark - SPSessionDelegate Protocol
 
 - (void)sessionDidLoginSuccessfully:(SPSession *)aSession
 {
 	NSLog(@"Successfull login");
+    
+    self.loginStatusLabel.text = @"Login Success!";
 }
 
 - (void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error

@@ -302,7 +302,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3Qk-Ji-qif">
-                                <rect key="frame" x="103" y="105" width="115" height="37"/>
+                                <rect key="frame" x="103" y="197" width="115" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Check Track">
@@ -317,7 +317,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="X3E-H3-izT">
-                                <rect key="frame" x="112" y="162" width="96" height="37"/>
+                                <rect key="frame" x="112" y="254" width="96" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Play track">
@@ -331,11 +331,41 @@
                                     <action selector="playTrack:" destination="twU-ee-9hH" eventType="touchUpInside" id="GAw-UJ-WC0"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Spotify username" minimumFontSize="17" id="0JT-lL-pdx">
+                                <rect key="frame" x="20" y="20" width="280" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="twU-ee-9hH" id="huy-VI-oW9"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" id="L2I-Y0-RxZ">
+                                <rect key="frame" x="20" y="66" width="280" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="twU-ee-9hH" id="Fhl-J6-ZBk"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Not Logged In" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="Ngv-nx-iwa">
+                                <rect key="frame" x="66" y="130" width="189" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="pnR-MO-V9h"/>
                     <connections>
+                        <outlet property="checkTrackButton" destination="3Qk-Ji-qif" id="K1V-Xm-aMH"/>
+                        <outlet property="loginStatusLabel" destination="Ngv-nx-iwa" id="wCX-DD-Afl"/>
+                        <outlet property="passwordTextField" destination="L2I-Y0-RxZ" id="744-KA-QXR"/>
+                        <outlet property="playTrackButton" destination="X3E-H3-izT" id="Oih-wG-s9O"/>
+                        <outlet property="usernameTextField" destination="0JT-lL-pdx" id="GVY-SI-gF2"/>
                         <outlet property="view" destination="fYx-Mi-XD0" id="Cot-KG-Icy"/>
                     </connections>
                 </viewController>
