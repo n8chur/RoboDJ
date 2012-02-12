@@ -31,6 +31,7 @@
 @synthesize services = _services;
 @synthesize server = _server;
 @synthesize client = _client;
+@synthesize session = _session;
 
 #pragma mark - View lifecycle
 
@@ -88,28 +89,36 @@
 	//    [self.netService publish];
 	//    [self.netService resolveWithTimeout:10.0f];
 	
-	if (self.server == nil) {
-		self.server = [[BonjourServer alloc] init];
-		NSLog(@"Server: %@", self.server);
-	}
-	else {
-		[self.server run];
-		NSLog(@"Server run");
-	}
+//	if (self.server == nil) {
+//		self.server = [[BonjourServer alloc] init];
+//		NSLog(@"Server: %@", self.server);
+//	}
+//	else {
+//		[self.server run];
+//		NSLog(@"Server run");
+//	}
+
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:@"RobotDJ" sessionMode:GKSessionModeServer];
 }
 
 - (IBAction)searchButtonPressed:(id)sender {
 	//    NSLog(@"currently available services: %@", self.services);
 	//    [self.netServiceBrowser searchForServicesOfType:@"_http._tcp" inDomain:@"local"];
 	
+
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:@"RobotDJ" sessionMode:GKSessionModeClient];
 	
-	BonjourClient *client = [[BonjourClient alloc] init];
-	[client searchAndConnect];
+	NSArray *peers = [self.session peersWithConnectionState:GKPeerStateAvailable];
+	
+	NSLog(@"Peers: %@", peers);
+	
+//	BonjourClient *client = [[BonjourClient alloc] init];
+//	[client searchAndConnect];
 }
 
 - (IBAction)connectButtonPressed:(id)sender {
-    NSNetService* service = [self.services objectAtIndex:0];
-    [service resolveWithTimeout:10.0f];
+//    NSNetService* service = [self.services objectAtIndex:0];
+//    [service resolveWithTimeout:10.0f];
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser*)netServiceBrowser didRemoveService:(NSNetService*)service moreComing:(BOOL)moreComing {

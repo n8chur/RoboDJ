@@ -21,6 +21,7 @@
 @implementation LoginViewController
 @synthesize usernameTextField;
 @synthesize passwordTextField;
+@synthesize session = _session;
 
 #pragma mark - View lifecycle
 
@@ -60,6 +61,16 @@
     
     self.usernameTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"];
     self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.Password"];
+	
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:@"RobotDJ" sessionMode:GKSessionModePeer];
+	self.session.delegate = self;
+	self.session.available = YES;
+
+	NSLog(@"session: %@", self.session);
+	NSLog(@"name: %@", self.session.displayName);
+	NSLog(@"peedID: %@", self.session.peerID);
+	NSLog(@"sessionID: %@", self.session.sessionID);
+	NSLog(@"mode: %d", self.session.sessionMode);
     
     [super viewDidLoad];
 }
@@ -143,5 +154,28 @@
                                           otherButtonTitles: nil];
     [alert show];
 }
+
+#pragma mark - GKSessionDelegate Protocol
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+	NSLog(@"DidChangeState");
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+	NSLog(@"didReceiveConnectionRequestFromPeer");	
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+	NSLog(@"didFailWithError");
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+	NSLog(@"connectionWithPeerFailed");
+}
+
 
 @end

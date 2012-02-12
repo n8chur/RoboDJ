@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BonjourClient.h"
 #import "BonjourServer.h"
+#import <GameKit/GameKit.h>
 
 @interface BonjourViewController : UIViewController 
 - (IBAction)hostButtonPressed:(id)sender;
@@ -20,5 +21,7 @@
 
 @property (strong, nonatomic) BonjourServer *server;
 @property (strong, nonatomic) BonjourClient *client;
+
+@property (strong, nonatomic) GKSession *session;
 
 @end
