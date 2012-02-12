@@ -12,17 +12,11 @@
 
 @property (weak, nonatomic) IBOutlet UISlider *mixerSlider;
 
-- (IBAction)mixerSliderValueChanged:(id)sender;
-
 @property (weak, nonatomic) IBOutlet UILabel *volumeALabel;
 @property (weak, nonatomic) IBOutlet UILabel *volumeBLabel;
 
 - (IBAction)playIntrosSyncedButtonPressed:(id)sender;
 
-- (IBAction)playAButtonPressed:(id)sender;
-- (IBAction)playBButtonPressed:(id)sender;
-
-- (IBAction)stopAButtonPressed:(id)sender;
-- (IBAction)stopBButtonPressed:(id)sender;
+- (IBAction)startButtonPressed:(id)sender;
 
 @end
