@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
+#import "ListenViewController.h"
+#import "AppDelegate.h"
 
 @interface ContributeViewController : UITableViewController <GKSessionDelegate>
 
 @property (strong, nonatomic) GKSession *session;
+@property (strong, nonatomic) NSArray *availableServers;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

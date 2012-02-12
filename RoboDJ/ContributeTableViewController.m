@@ -11,6 +11,8 @@
 @implementation ContributeViewController
 
 @synthesize session = _session;
+@synthesize availableServers = _availableServers;
+@synthesize tableView = _tableView;
 
 #pragma mark - View lifecycle
 
@@ -18,7 +20,7 @@
 {
     [super viewDidLoad];
     
-	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModePeer];
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModeClient];
 	self.session.delegate = self;
 	self.session.available = YES;
 
@@ -80,13 +82,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return [self.availableServers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.textLabel.text = [NSString stringWithFormat:@"HOST NAME %i", indexPath.row];
+	NSString *peerID = [self.availableServers objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.session displayNameForPeer:peerID]];
     return cell;
 }
 
@@ -139,10 +142,9 @@
 	
 	NSLog(@"Peers: %@", peers);
 	
-	for (NSString *peer in peers) {
-		NSLog(@"peerID: %@ name: %@", peer, [self.session displayNameForPeer:peer]);
-	}
-
+	self.availableServers = peers;
+	
+	[self.tableView reloadData];
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
@@ -158,13 +160,20 @@
 - (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
 {
 	NSLog(@"connectionWithPeerFailed");
-}
+}  
 
-- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    if ( [identifier isEqualToString:@"pushListenController"] ) {
-        
-    }
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	
+	NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+	
+//	DetailViewController *detail = [segue destinationViewController];
+	
+	NSString *peerID = [self.availableServers objectAtIndex:selectedIndexPath.row];
+	NSLog(@"Selected peer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
+	
+	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+	appDelegate.serverPeerID = peerID;
+	appDelegate.session = self.session;
 }
 
 @end

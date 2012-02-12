@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
+#import "AppDelegate.h"
 
 @interface ListenViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 - (IBAction)likeButtonPressed:(id)sender;
@@ -19,5 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *dislikesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) GKSession *session;
+@property (strong, nonatomic) NSString *serverPeerID;
+
 
 @end

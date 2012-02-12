@@ -15,6 +15,10 @@ static NSString *TEST_API_KEY = @"2J12S2GOSDBV2KC6V";
 
 @synthesize window = _window;
 
+@synthesize serverPeerID = _serverPeerID;
+@synthesize session = _session;
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.

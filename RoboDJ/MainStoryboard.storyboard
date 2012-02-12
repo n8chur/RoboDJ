@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OGc-bu-NcJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OGc-bu-NcJ">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
@@ -328,6 +328,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="CONTRIBUTE" id="Z7Z-X9-N8Y"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <connections>
+                        <outlet property="tableView" destination="4Xs-u9-9dp" id="bKL-5m-pIx"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="885" y="488"/>
@@ -492,7 +495,6 @@
                     <connections>
                         <outlet property="contributorsLabel" destination="45b-nG-qMp" id="M9h-Ox-LP5"/>
                         <outlet property="currentTimeLabel" destination="WVJ-93-M94" id="1Tt-YN-LTk"/>
-                        <outlet property="dislikeButtonPressed" destination="Y6C-v8-1Aa" id="E5z-hS-jd3"/>
                         <outlet property="dislikesLabel" destination="Xy2-mp-Z8c" id="Fbx-73-gS2"/>
                         <outlet property="likesLabel" destination="HJ4-cn-Uaq" id="yZi-3b-WWM"/>
                         <outlet property="progressView" destination="Dy2-rs-VNV" id="luh-dj-ESg"/>
@@ -528,6 +530,9 @@
     <classes>
         <class className="ContributeViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ContributeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
         </class>
         <class className="HomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>

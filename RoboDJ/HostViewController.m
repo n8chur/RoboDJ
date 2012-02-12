@@ -59,6 +59,8 @@
 @synthesize combinedSongs = _combinedSongs;
 @synthesize likesAndDislikes = _likesAndDislikes;
 @synthesize previouslySearchedTracks = _previouslySearchedTracks;
+@synthesize session = _session;
+
 
 #pragma mark - View lifecycle
 
@@ -110,6 +112,16 @@
     self.songNameLabel.text = @"Loading...";
     
     [self performSearch];
+	
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModeServer];
+	self.session.delegate = self;
+	self.session.available = YES;
+	
+	NSLog(@"session: %@", self.session);
+	NSLog(@"name: %@", self.session.displayName);
+	NSLog(@"peedID: %@", self.session.peerID);
+	NSLog(@"sessionID: %@", self.session.sessionID);
+	NSLog(@"mode: %d", self.session.sessionMode);
 }
 
 - (void)viewDidUnload
@@ -390,5 +402,35 @@ return YES;
  return YES;
  }
  */
+
+#pragma mark - GKSessionDelegate Protocol
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+	NSLog(@"DidChangeState");
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+	NSLog(@"didReceiveConnectionRequestFromPeer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
+	NSError *error = NULL;
+	if ([self.session acceptConnectionFromPeer:peerID error:&error]) {
+		NSLog(@"Connection to peer successfull");
+	}
+	else {
+		NSLog(@"Connection to peer fail: %@", [error localizedDescription]);
+	}
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+	NSLog(@"didFailWithError");
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+	NSLog(@"connectionWithPeerFailed");
+}
+
 
 @end
