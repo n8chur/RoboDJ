@@ -44,20 +44,26 @@
 		46BC0CE614E7695300C503DE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BC0CE514E7695300C503DE /* SystemConfiguration.framework */; };
 		46C6033714E7FA7900A4E767 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */; };
 		46C6033814E7FA7900A4E767 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */; };
-		46C6034A14E8159D00A4E767 /* SecondStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */; };
+		46C6034A14E8159D00A4E767 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034914E8159D00A4E767 /* MainStoryboard.storyboard */; };
 		46C6035214E821EE00A4E767 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034E14E821EE00A4E767 /* like.png */; };
 		46C6035314E821EE00A4E767 /* like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034F14E821EE00A4E767 /* like@2x.png */; };
 		46C6035614E8225700A4E767 /* dislike.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035414E8225700A4E767 /* dislike.png */; };
 		46C6035714E8225700A4E767 /* dislike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035514E8225700A4E767 /* dislike@2x.png */; };
 		46C6035A14E8236E00A4E767 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035814E8236E00A4E767 /* bg.png */; };
 		46C6035B14E8236E00A4E767 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035914E8236E00A4E767 /* bg@2x.png */; };
+		46C6035F14E827A700A4E767 /* spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035E14E827A700A4E767 /* spotify.png */; };
+		46C6036314E8280300A4E767 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6036214E8280300A4E767 /* HomeViewController.m */; };
+		46C6036614E8287D00A4E767 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6036514E8287D00A4E767 /* LoginViewController.m */; };
+		46C6036914E8290100A4E767 /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6036814E8290100A4E767 /* HostViewController.m */; };
+		46C6036C14E8292A00A4E767 /* ContributeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6036B14E8292A00A4E767 /* ContributeTableViewController.m */; };
+		46C6036F14E8299300A4E767 /* ListenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6036E14E8299300A4E767 /* ListenViewController.m */; };
 		46EE00FD14E71A5B00299BD8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE00FC14E71A5B00299BD8 /* UIKit.framework */; };
 		46EE00FF14E71A5B00299BD8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE00FE14E71A5B00299BD8 /* Foundation.framework */; };
 		46EE010114E71A5B00299BD8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE010014E71A5B00299BD8 /* CoreGraphics.framework */; };
 		46EE010714E71A5B00299BD8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46EE010514E71A5B00299BD8 /* InfoPlist.strings */; };
 		46EE010914E71A5B00299BD8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE010814E71A5B00299BD8 /* main.m */; };
 		46EE010D14E71A5B00299BD8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE010C14E71A5B00299BD8 /* AppDelegate.m */; };
-		46EE011014E71A5B00299BD8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */; };
+		46EE011014E71A5B00299BD8 /* OldStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46EE010E14E71A5B00299BD8 /* OldStoryboard.storyboard */; };
 		46EE011314E71A5B00299BD8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE011214E71A5B00299BD8 /* ViewController.m */; };
 		46F128E114E71D45003B6AF1 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */; };
 		46F128E614E722A3003B6AF1 /* RoboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F128E514E722A3003B6AF1 /* RoboViewController.m */; };
@@ -171,13 +177,24 @@
 		46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPCircularBuffer.m"; sourceTree = "<group>"; };
 		46C6033514E7FA7900A4E767 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPPlaybackManager.h"; sourceTree = "<group>"; };
 		46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlaybackManager.m; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPPlaybackManager.m"; sourceTree = "<group>"; };
-		46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SecondStoryboard.storyboard; sourceTree = "<group>"; };
+		46C6034914E8159D00A4E767 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		46C6034E14E821EE00A4E767 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		46C6034F14E821EE00A4E767 /* like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like@2x.png"; sourceTree = "<group>"; };
 		46C6035414E8225700A4E767 /* dislike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dislike.png; sourceTree = "<group>"; };
 		46C6035514E8225700A4E767 /* dislike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dislike@2x.png"; sourceTree = "<group>"; };
 		46C6035814E8236E00A4E767 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		46C6035914E8236E00A4E767 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		46C6035E14E827A700A4E767 /* spotify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotify.png; sourceTree = "<group>"; };
+		46C6036114E8280300A4E767 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		46C6036214E8280300A4E767 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		46C6036414E8287D00A4E767 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		46C6036514E8287D00A4E767 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		46C6036714E8290100A4E767 /* HostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostViewController.h; sourceTree = "<group>"; };
+		46C6036814E8290100A4E767 /* HostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostViewController.m; sourceTree = "<group>"; };
+		46C6036A14E8292A00A4E767 /* ContributeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContributeTableViewController.h; sourceTree = "<group>"; };
+		46C6036B14E8292A00A4E767 /* ContributeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContributeTableViewController.m; sourceTree = "<group>"; };
+		46C6036D14E8299300A4E767 /* ListenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenViewController.h; sourceTree = "<group>"; };
+		46C6036E14E8299300A4E767 /* ListenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenViewController.m; sourceTree = "<group>"; };
 		46EE00F814E71A5B00299BD8 /* RoboDJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoboDJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EE00FC14E71A5B00299BD8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		46EE00FE14E71A5B00299BD8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -188,7 +205,7 @@
 		46EE010A14E71A5B00299BD8 /* RoboDJ-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RoboDJ-Prefix.pch"; sourceTree = "<group>"; };
 		46EE010B14E71A5B00299BD8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46EE010C14E71A5B00299BD8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		46EE010F14E71A5B00299BD8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		46EE010F14E71A5B00299BD8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/OldStoryboard.storyboard; sourceTree = "<group>"; };
 		46EE011114E71A5B00299BD8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		46EE011214E71A5B00299BD8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyViewController.h; sourceTree = "<group>"; };
@@ -400,9 +417,28 @@
 				46C6035514E8225700A4E767 /* dislike@2x.png */,
 				46C6034E14E821EE00A4E767 /* like.png */,
 				46C6034F14E821EE00A4E767 /* like@2x.png */,
+				46C6035E14E827A700A4E767 /* spotify.png */,
 			);
 			name = Resources;
 			path = RoboDJ;
+			sourceTree = "<group>";
+		};
+		46C6036014E827E400A4E767 /* New Views */ = {
+			isa = PBXGroup;
+			children = (
+				46C6034914E8159D00A4E767 /* MainStoryboard.storyboard */,
+				46C6036114E8280300A4E767 /* HomeViewController.h */,
+				46C6036214E8280300A4E767 /* HomeViewController.m */,
+				46C6036A14E8292A00A4E767 /* ContributeTableViewController.h */,
+				46C6036B14E8292A00A4E767 /* ContributeTableViewController.m */,
+				46C6036D14E8299300A4E767 /* ListenViewController.h */,
+				46C6036E14E8299300A4E767 /* ListenViewController.m */,
+				46C6036414E8287D00A4E767 /* LoginViewController.h */,
+				46C6036514E8287D00A4E767 /* LoginViewController.m */,
+				46C6036714E8290100A4E767 /* HostViewController.h */,
+				46C6036814E8290100A4E767 /* HostViewController.m */,
+			);
+			name = "New Views";
 			sourceTree = "<group>";
 		};
 		46EE00ED14E71A5B00299BD8 = {
@@ -450,8 +486,8 @@
 			children = (
 				46EE010B14E71A5B00299BD8 /* AppDelegate.h */,
 				46EE010C14E71A5B00299BD8 /* AppDelegate.m */,
-				46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */,
-				46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */,
+				46C6036014E827E400A4E767 /* New Views */,
+				46EE010E14E71A5B00299BD8 /* OldStoryboard.storyboard */,
 				46EE011114E71A5B00299BD8 /* ViewController.h */,
 				46EE011214E71A5B00299BD8 /* ViewController.m */,
 				4657AF4214E7F67E007E703A /* Robo */,
@@ -573,18 +609,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				46EE010714E71A5B00299BD8 /* InfoPlist.strings in Resources */,
-				46EE011014E71A5B00299BD8 /* MainStoryboard.storyboard in Resources */,
+				46EE011014E71A5B00299BD8 /* OldStoryboard.storyboard in Resources */,
 				46F128EB14E72419003B6AF1 /* Paradise.mp3 in Resources */,
 				46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */,
 				AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */,
 				AE67FF0F14E77DE200BC312F /* Say.json in Resources */,
-				46C6034A14E8159D00A4E767 /* SecondStoryboard.storyboard in Resources */,
+				46C6034A14E8159D00A4E767 /* MainStoryboard.storyboard in Resources */,
 				46C6035214E821EE00A4E767 /* like.png in Resources */,
 				46C6035314E821EE00A4E767 /* like@2x.png in Resources */,
 				46C6035614E8225700A4E767 /* dislike.png in Resources */,
 				46C6035714E8225700A4E767 /* dislike@2x.png in Resources */,
 				46C6035A14E8236E00A4E767 /* bg.png in Resources */,
 				46C6035B14E8236E00A4E767 /* bg@2x.png in Resources */,
+				46C6035F14E827A700A4E767 /* spotify.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +672,11 @@
 				467E31C814E7D0CD0081FDAB /* BonjourViewController.m in Sources */,
 				46C6033714E7FA7900A4E767 /* SPCircularBuffer.m in Sources */,
 				46C6033814E7FA7900A4E767 /* SPPlaybackManager.m in Sources */,
+				46C6036314E8280300A4E767 /* HomeViewController.m in Sources */,
+				46C6036614E8287D00A4E767 /* LoginViewController.m in Sources */,
+				46C6036914E8290100A4E767 /* HostViewController.m in Sources */,
+				46C6036C14E8292A00A4E767 /* ContributeTableViewController.m in Sources */,
+				46C6036F14E8299300A4E767 /* ListenViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,12 +699,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */ = {
+		46EE010E14E71A5B00299BD8 /* OldStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				46EE010F14E71A5B00299BD8 /* en */,
 			);
-			name = MainStoryboard.storyboard;
+			name = OldStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
