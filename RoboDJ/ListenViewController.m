@@ -55,6 +55,8 @@
 	self.serverPeerID = appDelegate.serverPeerID;
 	
 	NSLog(@"Listen with session: %@ and server: %@ (%@)", self.session, self.serverPeerID, [self.session displayNameForPeer:self.serverPeerID]);
+	
+	[self.session connectToPeer:self.serverPeerID withTimeout:10.0f];
     
     self.songsPlaylist = [NSMutableArray array];
     

@@ -248,10 +248,12 @@
 {
     if ( [self.songsInSearchQueue count] != 0 ) {
         NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
-        if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
-            [self.previouslySearchedTracks addObject:searchString];
-            self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
-        }
+		if ( searchString ) {
+			if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
+				[self.previouslySearchedTracks addObject:searchString];
+				self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+			}
+		}
         else {
             [self performSearch];
         }
