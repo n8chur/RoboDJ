@@ -55,6 +55,10 @@
 		46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EC14E72442003B6AF1 /* Say.mp3 */; };
 		46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128EE14E7257D003B6AF1 /* AVFoundation.framework */; };
 		46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128F214E728F4003B6AF1 /* CoreMedia.framework */; };
+		AE67FF0814E7781B00BC312F /* RDJSong.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF0714E7781B00BC312F /* RDJSong.m */; };
+		AE67FF0B14E7786D00BC312F /* RDJSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF0A14E7786D00BC312F /* RDJSection.m */; };
+		AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */ = {isa = PBXBuildFile; fileRef = AE67FF0C14E77DE200BC312F /* Paradise.json */; };
+		AE67FF0F14E77DE200BC312F /* Say.json in Resources */ = {isa = PBXBuildFile; fileRef = AE67FF0D14E77DE200BC312F /* Say.json */; };
 		AEF8B49614E735B300E006B4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49514E735B300E006B4 /* CoreAudio.framework */; };
 		AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49714E735C700E006B4 /* AudioToolbox.framework */; };
 		AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49914E735E200E006B4 /* CFNetwork.framework */; };
@@ -172,6 +176,12 @@
 		46F128EC14E72442003B6AF1 /* Say.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Say.mp3; sourceTree = "<group>"; };
 		46F128EE14E7257D003B6AF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		46F128F214E728F4003B6AF1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		AE67FF0614E7781B00BC312F /* RDJSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDJSong.h; sourceTree = "<group>"; };
+		AE67FF0714E7781B00BC312F /* RDJSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDJSong.m; sourceTree = "<group>"; };
+		AE67FF0914E7786C00BC312F /* RDJSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDJSection.h; sourceTree = "<group>"; };
+		AE67FF0A14E7786D00BC312F /* RDJSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDJSection.m; sourceTree = "<group>"; };
+		AE67FF0C14E77DE200BC312F /* Paradise.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Paradise.json; sourceTree = "<group>"; };
+		AE67FF0D14E77DE200BC312F /* Say.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Say.json; sourceTree = "<group>"; };
 		AEF8B49514E735B300E006B4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		AEF8B49714E735C700E006B4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AEF8B49914E735E200E006B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -385,6 +395,10 @@
 				46F128E514E722A3003B6AF1 /* RoboViewController.m */,
 				469D3CF314E767F600111F81 /* EchonestViewController.h */,
 				469D3CF414E767F600111F81 /* EchonestViewController.m */,
+				AE67FF0614E7781B00BC312F /* RDJSong.h */,
+				AE67FF0714E7781B00BC312F /* RDJSong.m */,
+				AE67FF0914E7786C00BC312F /* RDJSection.h */,
+				AE67FF0A14E7786D00BC312F /* RDJSection.m */,
 				46EE010314E71A5B00299BD8 /* Supporting Files */,
 			);
 			path = RoboDJ;
@@ -406,6 +420,8 @@
 			children = (
 				46F128EA14E72419003B6AF1 /* Paradise.mp3 */,
 				46F128EC14E72442003B6AF1 /* Say.mp3 */,
+				AE67FF0C14E77DE200BC312F /* Paradise.json */,
+				AE67FF0D14E77DE200BC312F /* Say.json */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -499,6 +515,8 @@
 				46EE011014E71A5B00299BD8 /* MainStoryboard.storyboard in Resources */,
 				46F128EB14E72419003B6AF1 /* Paradise.mp3 in Resources */,
 				46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */,
+				AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */,
+				AE67FF0F14E77DE200BC312F /* Say.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +562,8 @@
 				469D3CF114E767C100111F81 /* NSMutableDictionary+QueryString.m in Sources */,
 				469D3CF214E767C100111F81 /* TSLibraryImport.m in Sources */,
 				469D3CF514E767F600111F81 /* EchonestViewController.m in Sources */,
+				AE67FF0814E7781B00BC312F /* RDJSong.m in Sources */,
+				AE67FF0B14E7786D00BC312F /* RDJSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

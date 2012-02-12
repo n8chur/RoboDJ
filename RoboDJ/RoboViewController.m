@@ -24,41 +24,9 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-typedef enum {
-    RDJSectionTypeStart = 0,
-    RDJSectionTypeIntro,
-    RDJSectionTypeDrop,
-    RDJSectionTypeBridge,
-    RDJSectionTypeOutro
-} RDJSectionType;
+#import "RDJSong.h"
 
-@interface RDJSection : NSObject
-
-@property (nonatomic) RDJSectionType type;
-@property (nonatomic) NSTimeInterval startTime;
-
--(id)initWithType:(RDJSectionType)aType startTime:(NSTimeInterval)aStartTime;
-
-@end
-
-@implementation RDJSection
-
-@synthesize type = _type;
-@synthesize startTime = _startTime;
-
--(id)initWithType:(RDJSectionType)aType startTime:(NSTimeInterval)aStartTime
-{
-    self = [super init];
-    if (self) {
-        self.type = aType;
-        self.startTime = aStartTime;
-    }
-    return self;
-}
-
-@end
-
-@interface RoboViewController () <AVAudioPlayerDelegate>
+@interface RoboViewController ()
 
 @property (nonatomic, retain) AVAudioPlayer* audioPlayerA;
 @property (nonatomic, retain) AVAudioPlayer* audioPlayerB;
@@ -111,25 +79,13 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	RDJSong *song = [RDJSong parse];
     
     self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
-    self.audioPlayerA.delegate = self;
-    self.audioPlayerASections = [NSArray arrayWithObjects:
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeStart startTime:kParadiseStartTime],
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kParadiseIntroTime],
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kParadiseOutroTime],
-                                 nil];
-    self.audioPlayerACurrentSection = RDJSectionTypeStart;
     
     
     self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
-    self.audioPlayerB.delegate = self;
-    self.audioPlayerBSections = [NSArray arrayWithObjects:
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeStart startTime:kSayStartTime],
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kSayIntroTime],
-                                 [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kSayOutroTime],
-                                 nil];
-    self.audioPlayerBCurrentSection = RDJSectionTypeStart;
     
     [self.audioPlayerA setVolume:kGlobalVolume];
     [self.audioPlayerB setVolume:kGlobalVolume];
