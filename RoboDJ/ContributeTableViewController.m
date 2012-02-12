@@ -11,7 +11,8 @@
 @implementation ContributeViewController
 
 @synthesize session = _session;
-@synthesize serverPeerID = _serverPeerID;
+@synthesize availableServers = _availableServers;
+@synthesize tableView = _tableView;
 
 #pragma mark - View lifecycle
 
@@ -81,13 +82,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return [self.availableServers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.textLabel.text = [NSString stringWithFormat:@"HOST NAME %i", indexPath.row];
+	NSString *peerID = [self.availableServers objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.session displayNameForPeer:peerID]];
     return cell;
 }
 
@@ -130,6 +132,18 @@
  }
  */
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSString *peerID = [self.availableServers objectAtIndex:indexPath.row];
+	NSLog(@"Selected peer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
+	
+	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+	appDelegate.serverPeerID = peerID;
+	appDelegate.session = self.session;
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 #pragma mark - GKSessionDelegate Protocol
 
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
@@ -140,15 +154,9 @@
 	
 	NSLog(@"Peers: %@", peers);
 	
-	for (NSString *peer in peers) {
-		NSLog(@"peerID: %@ name: %@", peer, [self.session displayNameForPeer:peer]);
-		if (self.serverPeerID == nil) {
-			NSLog(@"Connecting to that server....");
-			self.serverPeerID = peer;
-			[self.session connectToPeer:self.serverPeerID withTimeout:10.0f];
-		}
-	}
-
+	self.availableServers = peers;
+	
+	[self.tableView reloadData];
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID

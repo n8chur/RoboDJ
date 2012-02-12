@@ -41,11 +41,20 @@
 @synthesize songsPlaylist = _songsPlaylist;
 @synthesize clientUserSongs = _clientUserSongs;
 
+@synthesize serverPeerID = _serverPeerID;
+@synthesize session = _session;
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+	self.session = appDelegate.session;
+	self.serverPeerID = appDelegate.serverPeerID;
+	
+	NSLog(@"Listen with session: %@ and server: %@ (%@)", self.session, self.serverPeerID, [self.session displayNameForPeer:self.serverPeerID]);
     
     self.songsPlaylist = [NSMutableArray array];
     

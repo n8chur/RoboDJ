@@ -106,7 +106,7 @@
     
     [self performSearch];
 	
-	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:@"RobotDJ" sessionMode:GKSessionModeServer];
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModeServer];
 	self.session.delegate = self;
 	self.session.available = YES;
 	
