@@ -14,5 +14,6 @@
 - (IBAction)connectButtonPressed:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
 @end
