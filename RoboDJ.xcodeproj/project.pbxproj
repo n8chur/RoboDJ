@@ -272,10 +272,6 @@
 			children = (
 				46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */,
 				46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */,
-				46C6033314E7FA7900A4E767 /* SPCircularBuffer.h */,
-				46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */,
-				46C6033514E7FA7900A4E767 /* SPPlaybackManager.h */,
-				46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */,
 			);
 			name = Spotify;
 			sourceTree = "<group>";
@@ -437,6 +433,10 @@
 				46C6036514E8287D00A4E767 /* LoginViewController.m */,
 				46C6036714E8290100A4E767 /* HostViewController.h */,
 				46C6036814E8290100A4E767 /* HostViewController.m */,
+				46C6033314E7FA7900A4E767 /* SPCircularBuffer.h */,
+				46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */,
+				46C6033514E7FA7900A4E767 /* SPPlaybackManager.h */,
+				46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */,
 			);
 			name = "New Views";
 			sourceTree = "<group>";

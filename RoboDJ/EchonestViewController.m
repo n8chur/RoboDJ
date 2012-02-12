@@ -9,6 +9,8 @@
 #import "EchonestViewController.h"
 #import "ENAPIRequest.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "CocoaLibSpotify.h"
+#import "SPPlaybackManager.h"
 
 @interface EchonestViewController () <ENAPIRequestDelegate>
 
