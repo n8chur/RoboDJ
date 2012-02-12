@@ -43,8 +43,15 @@
 	};
 	const size_t g_appkey_size = sizeof(g_appkey);
 	
-//	NSData *appKey = [NSData dataWithBytes:g_appkey length:g_appkey_size];
-//	[SPSession initializeSharedSessionWithApplicationKey:appKey userAgent:@"com.westinnewell.RobotDJ" error:NULL];
+	NSData *appKey = [NSData dataWithBytes:g_appkey length:g_appkey_size];
+	NSError *error = NULL;
+	[SPSession initializeSharedSessionWithApplicationKey:appKey userAgent:@"com.westinnewell.RobotDJ" error:&error];
+	if (error != NULL) {
+		NSLog(@"Error: %@", [error localizedDescription]);
+	}
+	
+	SPTrack *track = [SPTrack trackForTrackURL:[NSURL URLWithString:@"http://open.spotify.com/track/22WbYJtuWEHpNmTJnYGpIw"] inSession:[SPSession sharedSession]];
+	NSLog(@"track: %@", track);
 }
 
 - (void)viewDidUnload
@@ -77,7 +84,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

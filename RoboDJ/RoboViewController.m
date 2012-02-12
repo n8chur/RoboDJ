@@ -44,8 +44,8 @@
     self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
     self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
     
-    [self.audioPlayerA setVolume:0.5f * kGlobalVolume];
-    [self.audioPlayerB setVolume:0.5f * kGlobalVolume];
+    [self.audioPlayerA setVolume:kGlobalVolume];
+    [self.audioPlayerB setVolume:kGlobalVolume];
     
     [self.audioPlayerA prepareToPlay];
     [self.audioPlayerB prepareToPlay];
@@ -86,7 +86,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)mixerSliderValueChanged:(id)sender {

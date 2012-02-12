@@ -25,6 +25,7 @@
 		AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49714E735C700E006B4 /* AudioToolbox.framework */; };
 		AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49914E735E200E006B4 /* CFNetwork.framework */; };
 		AEF8B4A714E7378200E006B4 /* libCocoaLibSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B4A314E7375E00E006B4 /* libCocoaLibSpotify.a */; };
+		AEF8B4A914E7384B00E006B4 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B4A814E7384B00E006B4 /* libstdc++.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		AEF8B49714E735C700E006B4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AEF8B49914E735E200E006B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AEF8B49B14E7375E00E006B4 /* CocoaLibSpotify iOS Library.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaLibSpotify iOS Library.xcodeproj"; path = "RoboDJ/Dependencies/CocoaLibSpotify/iOS Library/CocoaLibSpotify iOS Library.xcodeproj"; sourceTree = "<group>"; };
+		AEF8B4A814E7384B00E006B4 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEF8B4A914E7384B00E006B4 /* libstdc++.dylib in Frameworks */,
 				AEF8B4A714E7378200E006B4 /* libCocoaLibSpotify.a in Frameworks */,
 				AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */,
 				AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */,
@@ -117,6 +120,7 @@
 				AEF8B49914E735E200E006B4 /* CFNetwork.framework */,
 				AEF8B49714E735C700E006B4 /* AudioToolbox.framework */,
 				AEF8B49514E735B300E006B4 /* CoreAudio.framework */,
+				AEF8B4A814E7384B00E006B4 /* libstdc++.dylib */,
 				46F128F214E728F4003B6AF1 /* CoreMedia.framework */,
 				46F128EE14E7257D003B6AF1 /* AVFoundation.framework */,
 				46EE00FC14E71A5B00299BD8 /* UIKit.framework */,
@@ -351,6 +355,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoboDJ/RoboDJ-Prefix.pch";
 				INFOPLIST_FILE = "RoboDJ/RoboDJ-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -364,6 +372,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoboDJ/RoboDJ-Prefix.pch";
 				INFOPLIST_FILE = "RoboDJ/RoboDJ-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
