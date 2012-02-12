@@ -31,6 +31,8 @@
 
 @property (nonatomic, retain) NSMutableSet *previouslySearchedTracks;
 
+@property (nonatomic, retain) NSString* lastSearch;
+
 - (void)playNextSongInQueue;
 - (void)performSearch;
 - (void)playTrack;
@@ -62,6 +64,7 @@
 @synthesize likesAndDislikes = _likesAndDislikes;
 @synthesize previouslySearchedTracks = _previouslySearchedTracks;
 @synthesize session = _session;
+@synthesize lastSearch = _lastSearch;
 
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
@@ -118,6 +121,8 @@
     for ( NSUInteger i = 0; i < 100; i++ ) {
         [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:i]];
     }
+    [self shuffleMutableArray:self.hostsUserSongs];
+    
     self.combinedSongs = [NSMutableArray array];
     NSMutableSet* set = [NSMutableSet set];
     for ( NSString* string in self.hostsUserSongs ) {
@@ -220,6 +225,28 @@
     // and the new playlist (self.songsPlaylist)
 }
 
+- (void)addSearches
+{
+    NSUInteger maxSearchCount = 60;
+    NSUInteger searchCount = maxSearchCount;
+    NSUInteger i = [self.combinedSongs indexOfObject:[self.combinedSongs lastObject]];
+    while ( i > 0 ) {
+        NSMutableSet* set = [self.combinedSongs objectAtIndex:i];
+        for ( NSString * string in set ) {
+            [self.songsInSearchQueue insertObject:string atIndex:0];
+        }
+        i --;
+        searchCount --;
+    }
+    if ( searchCount == maxSearchCount - 1 ) {
+        [self performSearch];
+    }
+    else {
+        NSLog(@"No matches!");
+    }
+    NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
+}
+
 - (void)combineListAndRequestNewPlaylist:(NSArray*)newClientList
 {
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
@@ -245,46 +272,38 @@
             }
         }
     }
-    NSUInteger maxSearchCount = 60;
-    NSUInteger searchCount = maxSearchCount;
-    NSUInteger i = [self.combinedSongs indexOfObject:[self.combinedSongs lastObject]];
-    while ( i > 0 ) {
-        NSMutableSet* set = [self.combinedSongs objectAtIndex:i];
-        for ( NSString * string in set ) {
-            [self.songsInSearchQueue insertObject:string atIndex:0];
-        }
-        i --;
-        searchCount --;
-    }
-    if ( searchCount == maxSearchCount - 1 ) {
-        [self performSearch];
-    }
-    else {
-        NSLog(@"No matches!");
-    }
-    NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
-    
-    
+    [self addSearches];
 }
 
 - (void)performSearch
 {
     if ( [self.songsInSearchQueue count] != 0 ) {
         NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
-        if ( searchString ) {
-            if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
-                [self.previouslySearchedTracks addObject:searchString];
-                self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+        NSLog(@"searchString: %@", searchString);
+        if ( searchString != self.lastSearch ) {
+            if ( searchString ) {
+                if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
+                    [self.previouslySearchedTracks addObject:searchString];
+                    self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+                    NSLog(@"new search");
+                    [self.songsInSearchQueue removeObjectAtIndex:0];
+                }
+                else {
+                    [self.songsInSearchQueue removeObjectAtIndex:0];
+                    [self performSearch];
+                    NSLog(@"already searched");
+                }
             }
             else {
+                [self.songsInSearchQueue removeObjectAtIndex:0];
                 [self performSearch];
+                NSLog(@"Search string invalid");
             }
         }
-		else {
-			[self performSearch];
-		}
+        else {
+            [self performSelector:@selector(performSearch) withObject:nil afterDelay:2.0f];
+        }
         
-        [self.songsInSearchQueue removeObjectAtIndex:0];
     }
 }
 
@@ -302,6 +321,10 @@
     self.totalTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", nearestSecond / 60, nearestSecond % 60];
     
     self.songNameLabel.text = [NSString stringWithFormat:@"%@ - %@", [(SPArtist*)[track.artists objectAtIndex:0] name], [track name]];
+    
+    if ( [self.songsInSearchQueue count] < 2 && [self.songsPlaylist count] < 10 ) {
+        [self addSearches];
+    }
 }
 
 - (void)playTrack
