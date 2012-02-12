@@ -27,7 +27,7 @@
 
 @property (nonatomic, retain) NSMutableArray *combinedSongs;
 
-@property (nonatomic, retain) NSDictionary *likesAndDislikes;
+@property (nonatomic, retain) NSMutableDictionary *likesAndDislikes;
 
 @property (nonatomic, retain) NSMutableSet *previouslySearchedTracks;
 
@@ -99,7 +99,7 @@
     self.previouslySearchedTracks = [NSMutableSet set];
     self.previouslyQueuedTracks = [NSMutableSet set];
     
-    self.likesAndDislikes = [NSDictionary dictionaryWithObjectsAndKeys:
+    self.likesAndDislikes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithUnsignedInteger:0], @"likes", 
                              [NSNumber numberWithUnsignedInteger:0], @"dislikes",
                              nil];
@@ -214,10 +214,14 @@
     if ( isGood ) {
         NSNumber* likes = [self.likesAndDislikes objectForKey:@"likes"];
         likes = [NSNumber numberWithUnsignedInteger:[likes unsignedIntegerValue]+1];
+		[self.likesAndDislikes setValue:likes forKey:@"likes"];
+		[self.likesLabel setText:[NSString stringWithFormat:@"%d", [likes integerValue]]];
     }
     else {
         NSNumber* dislikes = [self.likesAndDislikes objectForKey:@"dislikes"];
         dislikes = [NSNumber numberWithUnsignedInteger:[dislikes unsignedIntegerValue]+1];
+		[self.likesAndDislikes setValue:dislikes forKey:@"dislikes"];
+		[self.dislikesLabel setText:[NSString stringWithFormat:@"%d", [dislikes integerValue]]];
     }
     
 }
@@ -526,9 +530,11 @@ return YES;
 		
 		if ([type isEqualToString:@"likeSong"]) {
 			NSLog(@"Like Song");
+			[self newFeedbackRecieved:YES];
 		}
 		else if ([type isEqualToString:@"dislikeSong"]) {
 			NSLog(@"Dislike song");
+			[self newFeedbackRecieved:NO];
 		}
 		else if ([type isEqualToString:@"clientLibrary"]) {
 			NSLog(@"Client library");
