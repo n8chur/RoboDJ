@@ -44,6 +44,13 @@
 		46BC0CE614E7695300C503DE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BC0CE514E7695300C503DE /* SystemConfiguration.framework */; };
 		46C6033714E7FA7900A4E767 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */; };
 		46C6033814E7FA7900A4E767 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */; };
+		46C6034A14E8159D00A4E767 /* SecondStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */; };
+		46C6035214E821EE00A4E767 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034E14E821EE00A4E767 /* like.png */; };
+		46C6035314E821EE00A4E767 /* like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6034F14E821EE00A4E767 /* like@2x.png */; };
+		46C6035614E8225700A4E767 /* dislike.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035414E8225700A4E767 /* dislike.png */; };
+		46C6035714E8225700A4E767 /* dislike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035514E8225700A4E767 /* dislike@2x.png */; };
+		46C6035A14E8236E00A4E767 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035814E8236E00A4E767 /* bg.png */; };
+		46C6035B14E8236E00A4E767 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46C6035914E8236E00A4E767 /* bg@2x.png */; };
 		46EE00FD14E71A5B00299BD8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE00FC14E71A5B00299BD8 /* UIKit.framework */; };
 		46EE00FF14E71A5B00299BD8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE00FE14E71A5B00299BD8 /* Foundation.framework */; };
 		46EE010114E71A5B00299BD8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EE010014E71A5B00299BD8 /* CoreGraphics.framework */; };
@@ -164,6 +171,13 @@
 		46C6033414E7FA7900A4E767 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPCircularBuffer.m"; sourceTree = "<group>"; };
 		46C6033514E7FA7900A4E767 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPPlaybackManager.h"; sourceTree = "<group>"; };
 		46C6033614E7FA7900A4E767 /* SPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlaybackManager.m; path = "Dependencies/CocoaLibSpotify/Playback Helper Classes/SPPlaybackManager.m"; sourceTree = "<group>"; };
+		46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SecondStoryboard.storyboard; sourceTree = "<group>"; };
+		46C6034E14E821EE00A4E767 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		46C6034F14E821EE00A4E767 /* like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like@2x.png"; sourceTree = "<group>"; };
+		46C6035414E8225700A4E767 /* dislike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dislike.png; sourceTree = "<group>"; };
+		46C6035514E8225700A4E767 /* dislike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dislike@2x.png"; sourceTree = "<group>"; };
+		46C6035814E8236E00A4E767 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		46C6035914E8236E00A4E767 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		46EE00F814E71A5B00299BD8 /* RoboDJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoboDJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46EE00FC14E71A5B00299BD8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		46EE00FE14E71A5B00299BD8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -377,6 +391,20 @@
 			path = TSLibraryImport;
 			sourceTree = "<group>";
 		};
+		46C6034B14E821DC00A4E767 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				46C6035814E8236E00A4E767 /* bg.png */,
+				46C6035914E8236E00A4E767 /* bg@2x.png */,
+				46C6035414E8225700A4E767 /* dislike.png */,
+				46C6035514E8225700A4E767 /* dislike@2x.png */,
+				46C6034E14E821EE00A4E767 /* like.png */,
+				46C6034F14E821EE00A4E767 /* like@2x.png */,
+			);
+			name = Resources;
+			path = RoboDJ;
+			sourceTree = "<group>";
+		};
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +413,7 @@
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
 				46EE00F914E71A5B00299BD8 /* Products */,
 				AEF8B4A414E7376E00E006B4 /* Dependencies */,
+				46C6034B14E821DC00A4E767 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -422,6 +451,7 @@
 				46EE010B14E71A5B00299BD8 /* AppDelegate.h */,
 				46EE010C14E71A5B00299BD8 /* AppDelegate.m */,
 				46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */,
+				46C6034914E8159D00A4E767 /* SecondStoryboard.storyboard */,
 				46EE011114E71A5B00299BD8 /* ViewController.h */,
 				46EE011214E71A5B00299BD8 /* ViewController.m */,
 				4657AF4214E7F67E007E703A /* Robo */,
@@ -548,6 +578,13 @@
 				46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */,
 				AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */,
 				AE67FF0F14E77DE200BC312F /* Say.json in Resources */,
+				46C6034A14E8159D00A4E767 /* SecondStoryboard.storyboard in Resources */,
+				46C6035214E821EE00A4E767 /* like.png in Resources */,
+				46C6035314E821EE00A4E767 /* like@2x.png in Resources */,
+				46C6035614E8225700A4E767 /* dislike.png in Resources */,
+				46C6035714E8225700A4E767 /* dislike@2x.png in Resources */,
+				46C6035A14E8236E00A4E767 /* bg.png in Resources */,
+				46C6035B14E8236E00A4E767 /* bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
