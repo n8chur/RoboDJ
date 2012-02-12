@@ -17,7 +17,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="14" y="216"/>
+            <point key="canvasLocation" x="-258" y="83"/>
         </scene>
         <scene sceneID="5">
             <objects>
@@ -57,12 +57,44 @@
                                     <segue destination="ZJG-mW-zL2" kind="push" identifier="roboSegue" id="gAj-qE-C8h"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cFy-uD-8KW">
+                                <rect key="frame" x="113" y="189" width="92" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Echonest">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Umi-5t-XhI" kind="push" id="0uR-Cr-jGf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="g8A-E9-j9G"/>
                 </viewController>
             </objects>
+        </scene>
+        <scene sceneID="ZNE-GF-CfD">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HyB-tY-KPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Umi-5t-XhI" customClass="EchonestViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R54-Uc-4vM">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Mpm-mO-ILf"/>
+                    <connections>
+                        <outlet property="view" destination="R54-Uc-4vM" id="fN1-JO-ydh"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="170" y="679"/>
         </scene>
         <scene sceneID="KLz-pU-zph">
             <objects>
@@ -201,17 +233,18 @@
         </scene>
     </scenes>
     <classes>
+        <class className="EchonestViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EchonestViewController.h"/>
+        </class>
         <class className="RoboViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RoboViewController.h"/>
             <relationships>
-                <relationship kind="action" name="curveTypeSegmentedControlValueChanged:"/>
                 <relationship kind="action" name="mixerSliderValueChanged:"/>
                 <relationship kind="action" name="playAButtonPressed:"/>
                 <relationship kind="action" name="playBButtonPressed:"/>
                 <relationship kind="action" name="playIntrosSyncedButtonPressed:"/>
                 <relationship kind="action" name="stopAButtonPressed:"/>
                 <relationship kind="action" name="stopBButtonPressed:"/>
-                <relationship kind="outlet" name="curveTypeSegmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="mixerSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="volumeALabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="volumeBLabel" candidateClass="UILabel"/>
