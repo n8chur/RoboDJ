@@ -67,4 +67,9 @@
 	return song;
 }	
 
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"sectionIntro: %@, sectionBuildUp %@, sectionOutro: %@", self.sectionIntro, self.sectionBuildUp, self.sectionOutro];
+}
+
 @end

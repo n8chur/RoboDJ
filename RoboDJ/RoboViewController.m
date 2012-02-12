@@ -78,10 +78,14 @@
 {
     [super viewDidLoad];
 	
-	self.songA = [[RDJSong alloc] init];
-    self.songA.sectionIntro =  [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kParadiseStartTime];
-    self.songA.sectionBuildUp = [[RDJSection alloc] initWithType:RDJSectionTypeBuildUp startTime:kParadiseIntroTime];
-    self.songA.sectionOutro = [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kParadiseOutroTime];
+//	self.songA = [[RDJSong alloc] init];
+//    self.songA.sectionIntro =  [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kParadiseStartTime];
+//    self.songA.sectionBuildUp = [[RDJSection alloc] initWithType:RDJSectionTypeBuildUp startTime:kParadiseIntroTime];
+//    self.songA.sectionOutro = [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kParadiseOutroTime];
+    
+    self.songA = [RDJSong parseJSONURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"json"]];
+    
+    NSLog(@"songA: %@", self.songA);
     
     self.songB = [[RDJSong alloc] init];
     self.songB.sectionIntro =  [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kSayStartTime];
