@@ -10,7 +10,7 @@
 #import <GameKit/GameKit.h>
 #import "AppDelegate.h"
 
-@interface ListenViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ListenViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GKSessionDelegate>
 - (IBAction)likeButtonPressed:(id)sender;
 - (IBAction)dislikeButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
