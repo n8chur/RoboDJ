@@ -20,10 +20,45 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+typedef enum {
+    RDJSectionTypeStart = 0,
+    RDJSectionTypeIntro,
+    RDJSectionTypeOutro
+} RDJSectionType;
+
+@interface RDJSection : NSObject
+
+@property (nonatomic) RDJSectionType type;
+@property (nonatomic) NSTimeInterval startTime;
+
+-(id)initWithType:(RDJSectionType)aType startTime:(NSTimeInterval)aStartTime;
+
+@end
+
+@implementation RDJSection
+
+@synthesize type = _type;
+@synthesize startTime = _startTime;
+
+-(id)initWithType:(RDJSectionType)aType startTime:(NSTimeInterval)aStartTime
+{
+    self = [super init];
+    if (self) {
+        self.type = aType;
+        self.startTime = aStartTime;
+    }
+    return self;
+}
+
+@end
+
 @interface RoboViewController ()
 
 @property (nonatomic, retain) AVAudioPlayer* audioPlayerA;
 @property (nonatomic, retain) AVAudioPlayer* audioPlayerB;
+
+@property (nonatomic, retain) NSDictionary* audioPlayerASections;
+@property (nonatomic, retain) NSDictionary* audioPlayerBSections;
 
 @end
 
@@ -35,6 +70,9 @@
 @synthesize audioPlayerA = _audioPlayerA;
 @synthesize audioPlayerB = _audioPlayerB;
 
+@synthesize audioPlayerASections = _audioPlayerASections;
+@synthesize audioPlayerBSections = _audioPlayerBSections;
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -42,6 +80,9 @@
     [super viewDidLoad];
     
     self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
+    self.audioPlayerASections = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [[RDJSection alloc] initWithType:RDJSectionTypeStart startTime:kParadiseStartTime], 
+                                 nil];
     self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
     
     [self.audioPlayerA setVolume:kGlobalVolume];
