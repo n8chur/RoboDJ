@@ -7,8 +7,17 @@
 //
 
 #import "SpotifyViewController.h"
+//#import "SPPlaybackManager.h"
+
+@interface SpotifyViewController ()
+
+//@property (nonatomic, retain) SPPlaybackManager* playbackManager;
+
+@end
 
 @implementation SpotifyViewController
+
+//@synthesize playbackManager = _playbackManager;
 
 @synthesize usernameTextField = _usernameTextField;
 @synthesize passwordTextField = _passwordTextField;
@@ -59,6 +68,8 @@
 		}
 		NSLog(@"Spotify Session: %@", [SPSession sharedSession]);
 	}
+    
+//    self.playbackManager = [[[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]] autorelease];
 	
 	[[SPSession sharedSession] setDelegate:self];
 	[[SPSession sharedSession] setPlaybackDelegate:self];
@@ -105,7 +116,7 @@
 - (IBAction)checkTrack:(id)sender
 {
 	NSLog(@"track: %@", self.track);
-
+    
 	if ([self.track isLoaded]) {
 		NSLog(@"track: loaded");		
 	}
@@ -131,15 +142,42 @@
 
 - (void)playTrack:(id)sender
 {
-	NSError *error = NULL;
-	[[SPSession sharedSession] playTrack:self.track error:&error];
+	// Invoked by clicking the "Play" button in the UI.
+    NSURL *trackURL = [NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"];
+    SPTrack *track = [[SPSession sharedSession] trackForURL:trackURL];
+    
+    if (track != nil) {
+        
+        if (!track.isLoaded) {
+            // Since we're trying to play a brand new track that may not be loaded, 
+            // we may have to wait for a moment before playing. Tracks that are present 
+            // in the user's "library" (playlists, starred, inbox, etc) are automatically loaded
+            // on login. All this happens on an internal thread, so we'll just try again in a moment.
+            [self performSelector:@selector(playTrack:) withObject:sender afterDelay:0.1];
+            return;
+        }
+        
+        NSError *error = nil;
+        
+//        if (![self.playbackManager playTrack:track error:&error]) {
+        if (![[SPSession sharedSession] playTrack:track error:&error]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Play Track"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [[alert autorelease] show];
+        }
+        self.track = track;
+        return;
+    }
 	
-	if (error) {
-		NSLog(@"Error: %@", [error localizedDescription]);
-	}
-	else {
-		NSLog(@"Success!");
-	}
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Play Track"
+													message:@"Please enter a track URL"
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+	[[alert autorelease] show];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -151,8 +189,6 @@
     }
     else {
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameTextField.text password:self.passwordTextField.text rememberCredentials:YES];
-        
-        self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"]];
         
         NSError *error = NULL;
         if (![[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error]) {
@@ -195,7 +231,7 @@
 
 - (NSInteger)session:(SPSession *)aSession shouldDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount format:(const sp_audioformat *)audioFormat
 {
-	NSLog(@"shouldDeliverAudioFrames: %d", frameCount);
+    //	NSLog(@"shouldDeliverAudioFrames: %d", frameCount);
 	return frameCount;
 }
 

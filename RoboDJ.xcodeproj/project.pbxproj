@@ -217,6 +217,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4657AF4214E7F67E007E703A /* Robo */ = {
+			isa = PBXGroup;
+			children = (
+				46F128E414E722A3003B6AF1 /* RoboViewController.h */,
+				46F128E514E722A3003B6AF1 /* RoboViewController.m */,
+				AE67FF0614E7781B00BC312F /* RDJSong.h */,
+				AE67FF0714E7781B00BC312F /* RDJSong.m */,
+				AE67FF0914E7786C00BC312F /* RDJSection.h */,
+				AE67FF0A14E7786D00BC312F /* RDJSection.m */,
+			);
+			name = Robo;
+			sourceTree = "<group>";
+		};
+		4657AF4314E7F69A007E703A /* Spotify */ = {
+			isa = PBXGroup;
+			children = (
+				46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */,
+				46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */,
+			);
+			name = Spotify;
+			sourceTree = "<group>";
+		};
 		469D3C8D14E767C100111F81 /* libechonest */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,18 +414,12 @@
 				46EE010E14E71A5B00299BD8 /* MainStoryboard.storyboard */,
 				46EE011114E71A5B00299BD8 /* ViewController.h */,
 				46EE011214E71A5B00299BD8 /* ViewController.m */,
-				46F128DE14E71D45003B6AF1 /* SpotifyViewController.h */,
-				46F128DF14E71D45003B6AF1 /* SpotifyViewController.m */,
-				46F128E414E722A3003B6AF1 /* RoboViewController.h */,
-				46F128E514E722A3003B6AF1 /* RoboViewController.m */,
+				4657AF4214E7F67E007E703A /* Robo */,
+				4657AF4314E7F69A007E703A /* Spotify */,
 				469D3CF314E767F600111F81 /* EchonestViewController.h */,
 				469D3CF414E767F600111F81 /* EchonestViewController.m */,
 				467E31C614E7D0CC0081FDAB /* BonjourViewController.h */,
 				467E31C714E7D0CC0081FDAB /* BonjourViewController.m */,
-				AE67FF0614E7781B00BC312F /* RDJSong.h */,
-				AE67FF0714E7781B00BC312F /* RDJSong.m */,
-				AE67FF0914E7786C00BC312F /* RDJSection.h */,
-				AE67FF0A14E7786D00BC312F /* RDJSection.m */,
 				46EE010314E71A5B00299BD8 /* Supporting Files */,
 			);
 			path = RoboDJ;
