@@ -22,6 +22,8 @@
 
 @property (nonatomic) BOOL clientLibrarySent;
 
+@property (nonatomic, retain) NSArray *playlist;
+
 - (void)playNextSongInQueue;
 - (void)playTrack;
 
@@ -48,7 +50,7 @@
 @synthesize serverPeerID = _serverPeerID;
 @synthesize session = _session;
 
-@synthesize clientLibrarySent = _clientLibrarySent;
+@synthesize playlist = _playlist;
 
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
@@ -248,21 +250,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [self.playlist count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.textLabel.text = @"Song Title";
-    cell.detailTextLabel.text = @"Artist Name";
+	
+	NSDictionary *trackDict = [self.playlist objectAtIndex:indexPath.row];
+	
+    cell.textLabel.text = [trackDict objectForKey:@"name"];
+    cell.detailTextLabel.text = [trackDict objectForKey:@"artist"];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return;
+	[self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 
@@ -283,6 +288,35 @@
 - (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
 {
 	NSLog(@"Received data from %@ (%@) size %d", peer, [session displayNameForPeer:peer], [data length]);
+	
+	NSError *error = NULL;
+	NSDictionary* receivedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+	if (receivedData) {
+		NSString *type = [receivedData objectForKey:@"type"];
+		NSObject *object = [receivedData objectForKey:@"object"];
+		NSLog(@"Received data of type: %@ size: %d", type, [data length]);
+		
+		if ([type isEqualToString:@"playlist"]) {
+			NSLog(@"Playlist");
+			
+			self.playlist = [(NSDictionary*)object objectForKey:@"tracks"];
+			
+//			NSLog(@"playlist: %@", self.playlist);
+			
+			[self.tableView reloadData];
+		}
+		else if ([type isEqualToString:@"timeInfos"]) {
+			NSLog(@"timeInfos: %@", (NSDictionary*)object);
+			NSDictionary *timeInfos = (NSDictionary*)object;
+			self.currentTimeLabel.text = [timeInfos objectForKey:@"currentTimeLabel"];
+			self.progressView.progress = [[timeInfos objectForKey:@"progress"] floatValue];
+			self.totalTimeLabel.text = [timeInfos objectForKey:@"totalTimeLabel"];
+			self.songNameLabel.text = [timeInfos objectForKey:@"songNameLabel"];
+		}
+		else {
+			NSLog(@"Unknown!!!!");
+		}
+	}
 }
 
 

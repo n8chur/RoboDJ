@@ -69,6 +69,30 @@
 @synthesize lastSearch = _lastSearch;
 @synthesize previouslyQueuedTracks = _previouslyQueuedTracks;
 
+- (void)sendDataToClients:(NSString*)type object:(NSObject*)object
+{
+	NSError *error = NULL;
+	
+	NSDictionary *dataToSend = [NSDictionary dictionaryWithObjectsAndKeys:type, @"type", object, @"object", nil];
+	
+	NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataToSend options:0 error:&error];
+	
+	if (jsonData) {
+		NSLog(@"Data (%@) successfully JSONed: size: %d", type, [jsonData length]);
+	}
+	else {
+		NSLog(@"Data (%@) non JSONed. Failed.", type);
+		return;
+	}
+	
+	if ([self.session sendDataToAllPeers:jsonData withDataMode:GKSendDataReliable error:&error]) {
+		NSLog(@"Data (%@) successfully sent", type);
+	}
+	else {
+		NSLog(@"Fail to send data (%@): %@", type, [error localizedDescription]);
+	}
+}
+
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
     static BOOL seeded = NO;
@@ -87,6 +111,18 @@
     }
 }
 
+- (void)sendPlaylist
+{
+	NSMutableArray *tracks = [NSMutableArray arrayWithCapacity:[self.songsPlaylist count]];
+	for (SPTrack* track in self.songsPlaylist) {
+		NSDictionary *trackDict = [NSDictionary dictionaryWithObjectsAndKeys:track.name, @"name", [(SPArtist*)[track.artists objectAtIndex:0] name], @"artist", nil];
+		[tracks addObject:trackDict];
+	}
+	
+	NSDictionary *playlist = [NSDictionary dictionaryWithObjectsAndKeys:tracks, @"tracks", nil];
+	
+	[self sendDataToClients:@"playlist" object:playlist];
+}
 
 #pragma mark - View lifecycle
 
@@ -122,7 +158,7 @@
     self.playbackManager = [[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
     [[SPSession sharedSession] setDelegate:self];
     
-    for ( NSUInteger i = 0; i < 100; i++ ) {
+    for ( NSUInteger i = 0; i < 25; i++ ) {
         [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:i]];
     }
     [self shuffleMutableArray:self.hostsUserSongs];
@@ -336,6 +372,7 @@
     
     [self.songsPlaylist removeObject:track];
     [self.tableView reloadData];
+	[self sendPlaylist];
     
     self.currentTrack = [SPTrack trackForTrackURL:track.spotifyURL inSession:[SPSession sharedSession]];
     [self playTrack];
@@ -396,6 +433,7 @@
                     [self.songsPlaylist insertObject:[self.search.tracks objectAtIndex:0] atIndex:0];
                     [self.previouslyQueuedTracks addObject:[self.search.tracks objectAtIndex:0]];
                     [self.tableView reloadData];
+					[self sendPlaylist];
                 }
                 
                 if ( !self.playbackManager.isPlaying ) {
@@ -404,7 +442,7 @@
             }
             else {
                 [self sendNewPlayist];
-                if ( [self.songsPlaylist count] < 25 ) {
+                if ( [self.songsPlaylist count] < 10 ) {
                     [self performSelectorInBackground:@selector(performSearch) withObject:nil];
                 }
             }
@@ -419,6 +457,9 @@
         self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", nearestSecond / 60, nearestSecond % 60];
         
         self.progressView.progress = self.playbackManager.trackPosition / self.playbackManager.currentTrack.duration;
+		
+		NSDictionary *timeInfos = [NSDictionary dictionaryWithObjectsAndKeys:self.currentTimeLabel.text, @"currentTimeLabel", [NSNumber numberWithFloat:self.progressView.progress], @"progress",  self.totalTimeLabel.text, @"totalTimeLabel", self.songNameLabel.text, @"songNameLabel", nil];
+		[self sendDataToClients:@"timeInfos" object:timeInfos];
     }
 }
 
