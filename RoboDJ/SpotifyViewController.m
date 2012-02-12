@@ -77,9 +77,11 @@
 	};
 	const size_t g_appkey_size = sizeof(g_appkey);
     
-    [SPSession initializeSharedSessionWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size] 
-											   userAgent:@"com.westinnewell.RobotDJ"
-												   error:nil];
+	if (![SPSession sharedSession]) {
+		[SPSession initializeSharedSessionWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size] 
+												   userAgent:@"com.westinnewell.RobotDJ"
+													   error:nil];
+	}
     
     self.playbackManager = [[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
     
@@ -96,6 +98,9 @@
     self.songsPlaylist = [NSMutableArray array];
 	
 	[[SPSession sharedSession] setDelegate:self];
+	
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	[[SPSession sharedSession] attemptLoginWithUserName:[[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"] password:[[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.Password"] rememberCredentials:YES];
 }
 
 - (void)viewDidUnload
@@ -202,6 +207,10 @@
         [self.passwordTextField becomeFirstResponder];
     }
     else {
+		[[NSUserDefaults standardUserDefaults] setValue:self.usernameTextField.text forKey:@"Spotify.UserName"];
+		[[NSUserDefaults standardUserDefaults] setValue:self.passwordTextField.text forKey:@"Spotify.Password"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+		
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameTextField.text password:self.passwordTextField.text rememberCredentials:YES];
         
         [textField resignFirstResponder];
