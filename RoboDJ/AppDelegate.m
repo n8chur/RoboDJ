@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "ENAPI.h"
+
+static NSString *TEST_API_KEY = @"2J12S2GOSDBV2KC6V";
 
 @implementation AppDelegate
 
@@ -15,6 +18,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [ENAPI initWithApiKey:TEST_API_KEY];
+    
     return YES;
 }
 							
