@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
 
-@interface ContributeViewController : UITableViewController
+@interface ContributeViewController : UITableViewController <GKSessionDelegate>
 
-
+@property (strong, nonatomic) GKSession *session;
 
 @end

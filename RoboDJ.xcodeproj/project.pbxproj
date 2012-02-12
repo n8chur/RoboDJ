@@ -75,6 +75,9 @@
 		AE67FF0B14E7786D00BC312F /* RDJSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF0A14E7786D00BC312F /* RDJSection.m */; };
 		AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */ = {isa = PBXBuildFile; fileRef = AE67FF0C14E77DE200BC312F /* Paradise.json */; };
 		AE67FF0F14E77DE200BC312F /* Say.json in Resources */ = {isa = PBXBuildFile; fileRef = AE67FF0D14E77DE200BC312F /* Say.json */; };
+		AE67FF7014E8297500BC312F /* BonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF6F14E8297500BC312F /* BonjourClient.m */; };
+		AE67FF7314E8298100BC312F /* BonjourServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF7214E8298100BC312F /* BonjourServer.m */; };
+		AED4DB1A14E83B6800EEC1C9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED4DB1914E83B6800EEC1C9 /* GameKit.framework */; };
 		AEF8B49614E735B300E006B4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49514E735B300E006B4 /* CoreAudio.framework */; };
 		AEF8B49814E735C700E006B4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49714E735C700E006B4 /* AudioToolbox.framework */; };
 		AEF8B49A14E735E200E006B4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF8B49914E735E200E006B4 /* CFNetwork.framework */; };
@@ -222,6 +225,11 @@
 		AE67FF0A14E7786D00BC312F /* RDJSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDJSection.m; sourceTree = "<group>"; };
 		AE67FF0C14E77DE200BC312F /* Paradise.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Paradise.json; sourceTree = "<group>"; };
 		AE67FF0D14E77DE200BC312F /* Say.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Say.json; sourceTree = "<group>"; };
+		AE67FF6E14E8297500BC312F /* BonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BonjourClient.h; sourceTree = "<group>"; };
+		AE67FF6F14E8297500BC312F /* BonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BonjourClient.m; sourceTree = "<group>"; };
+		AE67FF7114E8298100BC312F /* BonjourServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BonjourServer.h; sourceTree = "<group>"; };
+		AE67FF7214E8298100BC312F /* BonjourServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BonjourServer.m; sourceTree = "<group>"; };
+		AED4DB1914E83B6800EEC1C9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		AEF8B49514E735B300E006B4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		AEF8B49714E735C700E006B4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AEF8B49914E735E200E006B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -234,6 +242,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED4DB1A14E83B6800EEC1C9 /* GameKit.framework in Frameworks */,
 				46BC0CE614E7695300C503DE /* SystemConfiguration.framework in Frameworks */,
 				46BC0CE414E7694200C503DE /* MediaPlayer.framework in Frameworks */,
 				46BC0CE214E7693000C503DE /* MobileCoreServices.framework in Frameworks */,
@@ -444,6 +453,7 @@
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
+				AED4DB1914E83B6800EEC1C9 /* GameKit.framework */,
 				46F128E714E723AD003B6AF1 /* Audio */,
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
@@ -496,6 +506,10 @@
 				469D3CF414E767F600111F81 /* EchonestViewController.m */,
 				467E31C614E7D0CC0081FDAB /* BonjourViewController.h */,
 				467E31C714E7D0CC0081FDAB /* BonjourViewController.m */,
+				AE67FF6E14E8297500BC312F /* BonjourClient.h */,
+				AE67FF6F14E8297500BC312F /* BonjourClient.m */,
+				AE67FF7114E8298100BC312F /* BonjourServer.h */,
+				AE67FF7214E8298100BC312F /* BonjourServer.m */,
 				46EE010314E71A5B00299BD8 /* Supporting Files */,
 			);
 			path = RoboDJ;
@@ -677,6 +691,8 @@
 				46C6036914E8290100A4E767 /* HostViewController.m in Sources */,
 				46C6036C14E8292A00A4E767 /* ContributeTableViewController.m in Sources */,
 				46C6036F14E8299300A4E767 /* ListenViewController.m in Sources */,
+				AE67FF7014E8297500BC312F /* BonjourClient.m in Sources */,
+				AE67FF7314E8298100BC312F /* BonjourServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

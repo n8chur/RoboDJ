@@ -10,12 +10,28 @@
 
 @implementation ContributeViewController
 
+@synthesize session = _session;
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModePeer];
+	self.session.delegate = self;
+	self.session.available = YES;
+
+	NSLog(@"session: %@", self.session);
+	NSLog(@"name: %@", self.session.displayName);
+	NSLog(@"peedID: %@", self.session.peerID);
+	NSLog(@"sessionID: %@", self.session.sessionID);
+	NSLog(@"mode: %d", self.session.sessionMode);
+
+	
+	NSArray *peers = [self.session peersWithConnectionState:GKPeerStateAvailable];
+	
+	NSLog(@"Peers: %@", peers);
 }
 
 - (void)viewDidUnload
@@ -112,5 +128,36 @@
  return YES;
  }
  */
+
+#pragma mark - GKSessionDelegate Protocol
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+	NSLog(@"DidChangeState");
+
+	NSArray *peers = [self.session peersWithConnectionState:GKPeerStateAvailable];
+	
+	NSLog(@"Peers: %@", peers);
+	
+	for (NSString *peer in peers) {
+		NSLog(@"peerID: %@ name: %@", peer, [self.session displayNameForPeer:peer]);
+	}
+
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+	NSLog(@"didReceiveConnectionRequestFromPeer");	
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+	NSLog(@"didFailWithError");
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+	NSLog(@"connectionWithPeerFailed");
+}
 
 @end
