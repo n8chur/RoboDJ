@@ -12,5 +12,6 @@
 @interface ContributeViewController : UITableViewController <GKSessionDelegate>
 
 @property (strong, nonatomic) GKSession *session;
+@property (strong, nonatomic) NSString *serverPeerID;
 
 @end

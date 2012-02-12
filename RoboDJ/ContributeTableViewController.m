@@ -11,6 +11,7 @@
 @implementation ContributeViewController
 
 @synthesize session = _session;
+@synthesize serverPeerID = _serverPeerID;
 
 #pragma mark - View lifecycle
 
@@ -18,7 +19,7 @@
 {
     [super viewDidLoad];
     
-	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModePeer];
+	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModeClient];
 	self.session.delegate = self;
 	self.session.available = YES;
 
@@ -141,6 +142,11 @@
 	
 	for (NSString *peer in peers) {
 		NSLog(@"peerID: %@ name: %@", peer, [self.session displayNameForPeer:peer]);
+		if (self.serverPeerID == nil) {
+			NSLog(@"Connecting to that server....");
+			self.serverPeerID = peer;
+			[self.session connectToPeer:self.serverPeerID withTimeout:10.0f];
+		}
 	}
 
 }

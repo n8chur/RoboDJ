@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GameKit/GameKit.h>
 
-@interface LoginViewController : UIViewController <GKSessionDelegate>
+@interface LoginViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -17,7 +16,5 @@
 - (IBAction)passwordTextFieldDidEndEditing:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 
-
-@property (strong, nonatomic) GKSession *session;
 
 @end

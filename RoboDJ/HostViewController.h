@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
 
-@interface HostViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface HostViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, GKSessionDelegate>
 - (IBAction)skipButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -18,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dislikesLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) GKSession *session;
 
 @end
