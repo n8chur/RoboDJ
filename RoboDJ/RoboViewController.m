@@ -36,11 +36,8 @@
 
 @property (nonatomic, retain) NSTimer* transitionTimer;
 
-@property (nonatomic) RDJSectionType audioPlayerACurrentSection;
-@property (nonatomic) RDJSectionType audioPlayerBCurrentSection;
-
-@property (nonatomic, retain) NSArray* audioPlayerASections;
-@property (nonatomic, retain) NSArray* audioPlayerBSections;
+@property (nonatomic, retain) RDJSong* songA;
+@property (nonatomic, retain) RDJSong* songB;
 
 @property (nonatomic) BOOL transitionInProgress;
 
@@ -64,11 +61,8 @@
 
 @synthesize transitionTimer = _transitionTimer;
 
-@synthesize audioPlayerACurrentSection = _audioPlayerACurrentSection;
-@synthesize audioPlayerBCurrentSection = _audioPlayerBCurrentSection;
-
-@synthesize audioPlayerASections = _audioPlayerASections;
-@synthesize audioPlayerBSections = _audioPlayerBSections;
+@synthesize songA = _songA;
+@synthesize songB = _songB;
 
 @synthesize transitionInProgress = _transitionInProgress;
 
@@ -80,11 +74,17 @@
 {
     [super viewDidLoad];
 	
-	RDJSong *song = [RDJSong parse];
+	self.songA = [[RDJSong alloc] init];
+    self.songA.sectionIntro =  [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kParadiseStartTime];
+    self.songA.sectionBuildUp = [[RDJSection alloc] initWithType:RDJSectionTypeBuildUp startTime:kParadiseIntroTime];
+    self.songA.sectionOutro = [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kParadiseOutroTime];
+    
+    self.songB = [[RDJSong alloc] init];
+    self.songB.sectionIntro =  [[RDJSection alloc] initWithType:RDJSectionTypeIntro startTime:kSayStartTime];
+    self.songB.sectionBuildUp = [[RDJSection alloc] initWithType:RDJSectionTypeBuildUp startTime:kSayIntroTime];
+    self.songB.sectionOutro = [[RDJSection alloc] initWithType:RDJSectionTypeOutro startTime:kSayOutroTime];
     
     self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
-    
-    
     self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
     
     [self.audioPlayerA setVolume:kGlobalVolume];
@@ -199,14 +199,14 @@
     }
 }
 
-- (void)transitionToBAtTime:(NSTimeInterval)startTime
+- (void)transitionToBAtSongATime:(NSTimeInterval)startTime
 {
     self.transitionInProgress = YES;
     
-    RDJSection* introSection = [self.audioPlayerBSections objectAtIndex:1];
-    [self.audioPlayerB setCurrentTime:introSection.startTime];
+    [self.audioPlayerB setCurrentTime:self.songB.sectionBuildUp.startTime];
     [self.audioPlayerB prepareToPlay];
-    NSTimeInterval timeTillTransition = startTime - self.audioPlayerA.currentTime;
+    
+    NSTimeInterval timeTillTransition =  self.audioPlayerA.currentTime - startTime;
     [self.audioPlayerB playAtTime:self.audioPlayerB.deviceCurrentTime + timeTillTransition];
     
     self.transitionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(transition) userInfo:nil repeats:YES];
@@ -215,11 +215,10 @@
 - (void)audioPlayerACheckTime
 {
     if ( self.transitionInProgress == NO ) {
-        RDJSection* startSection = [self.audioPlayerASections objectAtIndex:1];
         NSTimeInterval delay = 0.2f;
-        if ( self.audioPlayerA.currentTime >= startSection.startTime - delay) {
+        if ( self.audioPlayerA.currentTime >= self.songA.sectionOutro.startTime - delay) {
             NSLog(@"entering outro at: %f", self.audioPlayerA.currentTime);
-            [self transitionToBAtTime:startSection.startTime];
+            [self transitionToBAtSongATime:self.songA.sectionOutro.startTime];
             [self.audioPlayerATimeCheckTimer invalidate];
         }
     }
@@ -227,8 +226,7 @@
 
 - (void)playAudioPlayerA
 {
-    RDJSection* startSection = [self.audioPlayerASections objectAtIndex:2];
-    NSTimeInterval secondBeforeOutro = startSection.startTime - 2;
+    NSTimeInterval secondBeforeOutro = self.songA.sectionOutro.startTime - 2;
     [self.audioPlayerA setCurrentTime:secondBeforeOutro];
     [self.audioPlayerA prepareToPlay];
     [self.audioPlayerA play];
@@ -238,24 +236,24 @@
 
 - (void)audioPlayerBCheckTime
 {
-    if ( self.transitionInProgress == NO ) {
-        RDJSection* startSection = [self.audioPlayerASections objectAtIndex:1];
-        if ( self.audioPlayerA.currentTime >= startSection.startTime ) {
-            NSLog(@"entering outro at: %f", self.audioPlayerA.currentTime);
-            self.transitionInProgress = YES;
-        }
-    }
+//    if ( self.transitionInProgress == NO ) {
+//        RDJSection* startSection = [self.audioPlayerASections objectAtIndex:1];
+//        if ( self.audioPlayerA.currentTime >= startSection.startTime ) {
+//            NSLog(@"entering outro at: %f", self.audioPlayerA.currentTime);
+//            self.transitionInProgress = YES;
+//        }
+//    }
 }
 
 - (void)playAudioPlayerB
 {
-    RDJSection* startSection = [self.audioPlayerASections objectAtIndex:2];
-    NSTimeInterval secondBeforeOutro = startSection.startTime - 1;
-    [self.audioPlayerA setCurrentTime:secondBeforeOutro];
-    [self.audioPlayerA prepareToPlay];
-    [self.audioPlayerA play];
-    
-    self.audioPlayerATimeCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(audioPlayerACheckTime) userInfo:nil repeats:YES];
+//    RDJSection* startSection = [self.audioPlayerASections objectAtIndex:2];
+//    NSTimeInterval secondBeforeOutro = startSection.startTime - 1;
+//    [self.audioPlayerA setCurrentTime:secondBeforeOutro];
+//    [self.audioPlayerA prepareToPlay];
+//    [self.audioPlayerA play];
+//    
+//    self.audioPlayerATimeCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(audioPlayerACheckTime) userInfo:nil repeats:YES];
 }
 
 @end
