@@ -31,6 +31,8 @@
 
 @property (nonatomic, retain) NSMutableSet *previouslySearchedTracks;
 
+@property (nonatomic, retain) NSMutableSet *previouslyQueuedTracks;
+
 @property (nonatomic, retain) NSString* lastSearch;
 
 - (void)playNextSongInQueue;
@@ -65,6 +67,7 @@
 @synthesize previouslySearchedTracks = _previouslySearchedTracks;
 @synthesize session = _session;
 @synthesize lastSearch = _lastSearch;
+@synthesize previouslyQueuedTracks = _previouslyQueuedTracks;
 
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
@@ -94,6 +97,7 @@
     self.songsInSearchQueue = [NSMutableArray array];
     self.songsPlaylist = [NSMutableArray array];
     self.previouslySearchedTracks = [NSMutableSet set];
+    self.previouslyQueuedTracks = [NSMutableSet set];
     
     self.likesAndDislikes = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithUnsignedInteger:0], @"likes", 
@@ -272,6 +276,7 @@
             }
         }
     }
+    NSLog(@"new list combined");
     [self addSearches];
 }
 
@@ -374,9 +379,11 @@
     if ([keyPath isEqualToString:@"search.searchInProgress"]) {
         if ( self.search.searchInProgress == NO ) {
             if ( [self.search.tracks count] > 0 ) {
-                
-                [self.songsPlaylist insertObject:[self.search.tracks objectAtIndex:0] atIndex:0];
-                [self.tableView reloadData];
+                if ( [self.previouslyQueuedTracks containsObject:[self.search.tracks objectAtIndex:0]] == NO ) {
+                    [self.songsPlaylist insertObject:[self.search.tracks objectAtIndex:0] atIndex:0];
+                    [self.previouslyQueuedTracks addObject:[self.search.tracks objectAtIndex:0]];
+                    [self.tableView reloadData];
+                }
                 
                 if ( !self.playbackManager.isPlaying ) {
                     [self playNextSongInQueue];
