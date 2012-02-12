@@ -450,9 +450,32 @@ return YES;
     [self skipButtonPressed:nil];
 }
 
+#pragma mark - Data Handler
+
 - (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
 {
 	NSLog(@"Received data from %@ (%@) size %d", peer, [session displayNameForPeer:peer], [data length]);
+	
+	NSError *error = NULL;
+	NSDictionary* receivedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+	if (receivedData) {
+		NSString *type = [receivedData objectForKey:@"type"];
+		NSObject *object = [receivedData objectForKey:@"object"];
+		NSLog(@"Received data of type: %@ size: %d", type, [data length]);
+		
+		if ([type isEqualToString:@"likeSong"]) {
+			NSLog(@"Like Song");
+		}
+		else if ([type isEqualToString:@"dislikeSong"]) {
+			NSLog(@"Dislike song");
+		}
+		else if ([type isEqualToString:@"clientLibrary"]) {
+			NSLog(@"Client library");
+		}
+		else {
+			NSLog(@"Unknown!!!!");
+		}
+	}
 }
 
 @end

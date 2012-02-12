@@ -46,6 +46,35 @@
 
 #pragma mark - View lifecycle
 
+- (void)sendDataToServer:(NSString*)type object:(NSObject*)object
+{
+	NSError *error = NULL;
+
+	NSDictionary *dataToSend = [NSDictionary dictionaryWithObjectsAndKeys:type, @"type", object, @"object", nil];
+	
+	NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataToSend options:0 error:&error];
+	
+	if (jsonData) {
+		NSLog(@"Data (%@) successfully JSONed: size: %d", type, [jsonData length]);
+	}
+	else {
+		NSLog(@"Data (%@) non JSONed. Failed.", type);
+		return;
+	}
+	
+	if ([self.session sendData:jsonData toPeers:[NSArray arrayWithObject:self.serverPeerID] withDataMode:GKSendDataReliable error:&error]) {
+		NSLog(@"Data (%@) successfully sent", type);
+	}
+	else {
+		NSLog(@"Fail to send data (%@): %@", type, [error localizedDescription]);
+	}
+}
+
+- (void)sendClientLibrary
+{
+	[self sendDataToServer:@"clientLibrary" object:self.clientUserSongs];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,6 +82,8 @@
 	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
 	self.session = appDelegate.session;
 	self.serverPeerID = appDelegate.serverPeerID;
+	
+	self.session.delegate = self;
 	
 	NSLog(@"Listen with session: %@ and server: %@ (%@)", self.session, self.serverPeerID, [self.session displayNameForPeer:self.serverPeerID]);
 	
@@ -86,7 +117,8 @@
     // TODO: (connect to host and send) send songs to host
 	
 	[self.session setDataReceiveHandler:self withContext:NULL];
-    
+	
+	[self performSelector:@selector(sendClientLibrary) withObject:nil afterDelay:1.0f];
 }
 
 - (void)viewDidUnload
@@ -211,12 +243,11 @@
 
 
 - (IBAction)likeButtonPressed:(id)sender {
-	if ([self.session sendData:[NSData dataWithBytes:"testdata" length:8] toPeers:[NSArray arrayWithObject:self.serverPeerID] withDataMode:GKSendDataReliable error:NULL]) {
-		NSLog(@"Like reported");
-	}
+	[self sendDataToServer:@"likeSong" object:[NSNumber numberWithBool:YES]];
 }
 
 - (IBAction)dislikeButtonPressed:(id)sender {
+	[self sendDataToServer:@"dislikeSong" object:[NSNumber numberWithBool:YES]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -228,6 +259,36 @@
 - (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
 {
 	NSLog(@"Received data from %@ (%@) size %d", peer, [session displayNameForPeer:peer], [data length]);
+}
+
+
+#pragma mark - GKSessionDelegate Protocol
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+	NSLog(@"DidChangeState");
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+	NSLog(@"didReceiveConnectionRequestFromPeer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
+	NSError *error = NULL;
+	if ([self.session acceptConnectionFromPeer:peerID error:&error]) {
+		NSLog(@"Connection to peer successfull");
+	}
+	else {
+		NSLog(@"Connection to peer fail: %@", [error localizedDescription]);
+	}
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+	NSLog(@"didFailWithError");
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+	NSLog(@"connectionWithPeerFailed");
 }
 
 @end
