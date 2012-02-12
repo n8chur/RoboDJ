@@ -200,6 +200,30 @@
             <point key="canvasLocation" x="922" y="-39"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="RoboViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RoboViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="curveTypeSegmentedControlValueChanged:"/>
+                <relationship kind="action" name="mixerSliderValueChanged:"/>
+                <relationship kind="action" name="playAButtonPressed:"/>
+                <relationship kind="action" name="playBButtonPressed:"/>
+                <relationship kind="action" name="playIntrosSyncedButtonPressed:"/>
+                <relationship kind="action" name="stopAButtonPressed:"/>
+                <relationship kind="action" name="stopBButtonPressed:"/>
+                <relationship kind="outlet" name="curveTypeSegmentedControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="mixerSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="volumeALabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="volumeBLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SpotifyViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SpotifyViewController.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

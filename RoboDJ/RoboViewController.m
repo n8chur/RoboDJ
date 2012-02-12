@@ -42,9 +42,13 @@
     [super viewDidLoad];
     
     self.audioPlayerA = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Paradise" withExtension:@"mp3"] error:nil];
-    [self.audioPlayerA setVolume:kGlobalVolume];
     self.audioPlayerB = [[AVAudioPlayer alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Say" withExtension:@"mp3"] error:nil];
-    [self.audioPlayerB setVolume:kGlobalVolume];
+    
+    [self.audioPlayerA setVolume:0.5f * kGlobalVolume];
+    [self.audioPlayerB setVolume:0.5f * kGlobalVolume];
+    
+    [self.audioPlayerA prepareToPlay];
+    [self.audioPlayerB prepareToPlay];
     
     self.mixerSlider.value = 0.5f;
 }
@@ -89,21 +93,47 @@
     Float32 audioPlayerAVolume;
     Float32 audioPlayerBVolume;
     
-    Float32 sliderValue = ( self.mixerSlider.value * 10 ) - 5;
+    Float32 sliderValue;
+    // power ( steep in ease out ( ease out ) 
+    sliderValue = self.mixerSlider.value;
+    audioPlayerAVolume =( 1 - ((1-cos((sliderValue + 0.5f)*M_PI*2))/2)   ) * kGlobalVolume;
+    if ( sliderValue < 0.5f ) {
+        audioPlayerAVolume = kGlobalVolume;
+    }
+    audioPlayerBVolume = ( (1-cos(sliderValue*M_PI*2))/2   ) * kGlobalVolume;
+    if ( sliderValue > 0.5 ) {
+        audioPlayerBVolume = kGlobalVolume;
+    }
     
-    audioPlayerAVolume = ( 1 / (1 + exp(sliderValue)) ) * kGlobalVolume;
-    audioPlayerBVolume = ( 1 / (1 + exp(-sliderValue)) ) * kGlobalVolume;
+    if ( audioPlayerAVolume > kGlobalVolume ) {
+        audioPlayerAVolume = kGlobalVolume;
+    }
+    if ( audioPlayerBVolume > kGlobalVolume ) {
+        audioPlayerBVolume = kGlobalVolume;
+    }
+    
     
     [self.audioPlayerA setVolume:audioPlayerAVolume];
     [self.audioPlayerB setVolume:audioPlayerBVolume];
     
-    self.volumeALabel.text = [NSString stringWithFormat:@"%f.2", audioPlayerAVolume];
-    self.volumeBLabel.text = [NSString stringWithFormat:@"%f.2", audioPlayerBVolume];
+    self.volumeALabel.text = [NSString stringWithFormat:@"%.4f", audioPlayerAVolume];
+    self.volumeBLabel.text = [NSString stringWithFormat:@"%.4f", audioPlayerBVolume];
+}
+
+- (IBAction)curveTypeSegmentedControlValueChanged:(id)sender {
 }
 
 - (IBAction)playIntrosSyncedButtonPressed:(id)sender {
-    [self.audioPlayerA playAtTime:kParadiseIntroTime];
-    [self.audioPlayerB playAtTime:kSayIntroTime];
+    NSTimeInterval playTimeA = kParadiseIntroTime;
+    NSTimeInterval playTimeB = kSayIntroTime;
+    
+    [self.audioPlayerA setCurrentTime:playTimeA];
+    [self.audioPlayerB setCurrentTime:playTimeB];
+    NSLog(@"playTimeA: %f, playTimeB: %f", playTimeA, playTimeB);
+    
+    NSTimeInterval shortStartDelay = 0.01;
+    [self.audioPlayerA playAtTime:self.audioPlayerA.deviceCurrentTime + shortStartDelay];
+    [self.audioPlayerB playAtTime:self.audioPlayerA.deviceCurrentTime + shortStartDelay];
 }
 
 - (IBAction)playAButtonPressed:(id)sender {
@@ -116,10 +146,10 @@
 }
 
 - (IBAction)stopAButtonPressed:(id)sender {
-    [self.audioPlayerA stop];
+    [self.audioPlayerA pause];
 }
 
 - (IBAction)stopBButtonPressed:(id)sender {
-    [self.audioPlayerB stop];
+    [self.audioPlayerB pause];
 }
 @end

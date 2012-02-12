@@ -95,9 +95,6 @@
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
-				AEF8B49914E735E200E006B4 /* CFNetwork.framework */,
-				AEF8B49714E735C700E006B4 /* AudioToolbox.framework */,
-				AEF8B49514E735B300E006B4 /* CoreAudio.framework */,
 				46F128E714E723AD003B6AF1 /* Audio */,
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
@@ -117,6 +114,9 @@
 		46EE00FB14E71A5B00299BD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AEF8B49914E735E200E006B4 /* CFNetwork.framework */,
+				AEF8B49714E735C700E006B4 /* AudioToolbox.framework */,
+				AEF8B49514E735B300E006B4 /* CoreAudio.framework */,
 				46F128F214E728F4003B6AF1 /* CoreMedia.framework */,
 				46F128EE14E7257D003B6AF1 /* AVFoundation.framework */,
 				46EE00FC14E71A5B00299BD8 /* UIKit.framework */,
