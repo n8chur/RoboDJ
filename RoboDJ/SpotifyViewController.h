@@ -10,7 +10,7 @@
 
 #import "CocoaLibSpotify.h"
 
-@interface SpotifyViewController : UIViewController
+@interface SpotifyViewController : UIViewController <SPSessionDelegate, SPSessionPlaybackDelegate>
 
 @property (nonatomic, retain) SPTrack *track;
 

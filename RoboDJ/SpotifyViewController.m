@@ -55,11 +55,15 @@
 		NSLog(@"Spotify Session: %@", [SPSession sharedSession]);
 	}
 	
-	self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:22WbYJtuWEHpNmTJnYGpIw"]];
+	[[SPSession sharedSession] setDelegate:self];
+	[[SPSession sharedSession] setPlaybackDelegate:self];
+	
+	[[SPSession sharedSession] attemptLoginWithUserName:@"" password:@"" rememberCredentials:YES];
+	
+	self.track = [[SPSession sharedSession] trackForURL:[NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"]];
 	
 	NSError *error = NULL;
-	[[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error];
-	if (error) {
+	if (![[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error]) {
 		NSLog(@"Preload error: %@", error);
 	}
 	else {
@@ -138,6 +142,41 @@
 	else {
 		NSLog(@"Success!");
 	}
+}
+
+#pragma mark - SPSessionDelegate Protocol
+
+- (void)sessionDidLoginSuccessfully:(SPSession *)aSession
+{
+	NSLog(@"Successfull login");
+}
+
+- (void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error
+{
+	NSLog(@"Error login: %@", [error localizedDescription]);
+}
+
+#pragma mark - SPSessionPlaybackDelegate Protocol
+
+- (void)sessionDidLosePlayToken:(SPSession *)aSession
+{
+	NSLog(@"sessionDidLosePlayToken");
+}
+
+- (void)sessionDidEndPlayback:(SPSession *)aSession
+{
+	NSLog(@"sessionDidEndPlayback");
+}
+
+- (NSInteger)session:(SPSession *)aSession shouldDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount format:(const sp_audioformat *)audioFormat
+{
+	NSLog(@"shouldDeliverAudioFrames: %d", frameCount);
+	return frameCount;
+}
+
+- (void)session:(SPSession *)aSession didEncounterStreamingError:(NSError *)error
+{
+	NSLog(@"didEncounterStreamingError");	
 }
 
 @end
