@@ -160,4 +160,11 @@
 	NSLog(@"connectionWithPeerFailed");
 }
 
+- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ( [identifier isEqualToString:@"pushListenController"] ) {
+        
+    }
+}
+
 @end

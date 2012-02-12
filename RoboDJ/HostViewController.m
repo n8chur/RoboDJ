@@ -23,9 +23,11 @@
 
 @property (nonatomic, retain) NSMutableArray *hostsUserSongs;
 
-@property (nonatomic, retain) NSMutableDictionary *combinedSongs;
+@property (nonatomic, retain) NSMutableArray *combinedSongs;
 
 @property (nonatomic, retain) NSDictionary *likesAndDislikes;
+
+@property (nonatomic, retain) NSMutableSet *previouslySearchedTracks;
 
 - (void)playNextSongInQueue;
 - (void)performSearch;
@@ -56,6 +58,7 @@
 @synthesize hostsUserSongs = _hostsUserSongs;
 @synthesize combinedSongs = _combinedSongs;
 @synthesize likesAndDislikes = _likesAndDislikes;
+@synthesize previouslySearchedTracks = _previouslySearchedTracks;
 
 #pragma mark - View lifecycle
 
@@ -65,7 +68,7 @@
     
     self.songsInSearchQueue = [NSMutableArray array];
     self.songsPlaylist = [NSMutableArray array];
-    self.combinedSongs = [NSMutableDictionary dictionary];
+    self.previouslySearchedTracks = [NSMutableSet set];
     
     self.likesAndDislikes = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithUnsignedInteger:0], @"likes", 
@@ -91,8 +94,12 @@
     for ( NSUInteger i = 0; i < 25; i++ ) {
         [self.songsInSearchQueue addObject:[self.hostsUserSongs objectAtIndex:i]];
     }
-    
-    self.combinedSongs = [NSMutableDictionary dictionaryWithObject:self.hostsUserSongs forKey:[NSArray arrayWithObject:[NSNumber numberWithUnsignedChar:1]]];
+    self.combinedSongs = [NSMutableArray array];
+    NSMutableSet* set = [NSMutableSet set];
+    for ( NSString* string in self.hostsUserSongs ) {
+        [set addObject:string];
+    }
+    [self.combinedSongs addObject:set];
     
     self.currentTimeLabel.text = @"0:00";
     self.totalTimeLabel.text = @"0:00";
@@ -175,27 +182,72 @@
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
     // compare self.hostsUserSongs with newClientList
     // return 
+    
+    for ( NSString* string in newClientList ) {
+        for ( NSMutableSet* set in self.combinedSongs ) {
+            if ( [set containsObject:string] ) {
+                [set removeObject:string];
+                NSMutableSet* setAtNextIndex = [self.combinedSongs objectAtIndex:[self.combinedSongs indexOfObject:set]];
+                if ( setAtNextIndex == nil ) {
+                    [setAtNextIndex addObject:string];
+                    [self.combinedSongs addObject:setAtNextIndex];
+                }
+                else {
+                    [setAtNextIndex addObject:string];
+                }
+            }
+            else {
+                [set addObject:string];
+            }
+        }
+    }
+    NSUInteger maxSearchCount = 25;
+    NSUInteger searchCount = maxSearchCount;
+    NSUInteger i = [self.combinedSongs indexOfObject:[self.combinedSongs lastObject]];
+    while ( i > 0 ) {
+        NSMutableSet* set = [self.combinedSongs objectAtIndex:i];
+        for ( NSString * string in set ) {
+            [self.songsInSearchQueue insertObject:string atIndex:0];
+        }
+        i --;
+        searchCount --;
+    }
+    if ( searchCount == maxSearchCount - 1 ) {
+        [self performSearch];
+    }
+    else {
+        NSLog(@"No matches!");
+    }
 }
 
 - (void)performSearch
 {
     if ( [self.songsInSearchQueue count] != 0 ) {
-        self.search = [SPSearch searchWithSearchQuery:[self.songsInSearchQueue objectAtIndex:0] inSession:[SPSession sharedSession]];
+        NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
+        if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
+            [self.previouslySearchedTracks addObject:searchString];
+            self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+        }
+        else {
+            [self performSearch];
+        }
         [self.songsInSearchQueue removeObjectAtIndex:0];
+        
     }
 }
 
 - (void)playNextSongInQueue
 {
     SPTrack* track = [self.songsPlaylist objectAtIndex:0];
+    
     [self.songsPlaylist removeObject:track];
+    [self.tableView reloadData];
+    
     self.currentTrack = [SPTrack trackForTrackURL:track.spotifyURL inSession:[SPSession sharedSession]];
     [self playTrack];
     
     long nearestSecond = lroundf( (Float32)self.playbackManager.currentTrack.duration );
     self.totalTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", nearestSecond / 60, nearestSecond % 60];
-    
-    [self.tableView reloadData];
     
     self.songNameLabel.text = [NSString stringWithFormat:@"%@ - %@", [(SPArtist*)[track.artists objectAtIndex:0] name], [track name]];
 }
@@ -242,8 +294,8 @@
     if ([keyPath isEqualToString:@"search.searchInProgress"]) {
         if ( self.search.searchInProgress == NO ) {
             if ( [self.search.tracks count] > 0 ) {
-                [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
                 
+                [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
                 [self.tableView reloadData];
                 
                 if ( !self.playbackManager.isPlaying ) {
@@ -252,6 +304,10 @@
             }
             else {
                 NSLog(@"Done finding tracks!");
+                
+                if ( [self.songsPlaylist count] < 5 ) {
+                    [self performSearch];
+                }
             }
             
             if ( [self.songsInSearchQueue count] > 0 ) {
@@ -319,7 +375,6 @@ return YES;
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-
 
 // // Override to support rearranging the table view.
 // - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
