@@ -102,7 +102,10 @@
     [self.search addObserver:self forKeyPath:@"searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	[[SPSession sharedSession] attemptLoginWithUserName:[[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"] password:[[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.Password"] rememberCredentials:YES];
+    self.usernameTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"];
+    self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.Password"];
+    
+    [self performSearch];
 }
 
 - (void)viewDidUnload
