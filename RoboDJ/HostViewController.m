@@ -321,7 +321,7 @@
         if ( self.search.searchInProgress == NO ) {
             if ( [self.search.tracks count] > 0 ) {
                 
-                [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
+                [self.songsPlaylist insertObject:[self.search.tracks objectAtIndex:0] atIndex:0];
                 [self.tableView reloadData];
                 
                 if ( !self.playbackManager.isPlaying ) {
@@ -445,7 +445,10 @@ return YES;
 	NSLog(@"connectionWithPeerFailed");
 }
 
-#pragma mark - Data Handler
+- (void)sessionDidEndPlayback:(id<SPSessionPlaybackProvider>)aSession
+{
+    [self skipButtonPressed:nil];
+}
 
 - (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
 {
