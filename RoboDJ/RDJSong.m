@@ -16,11 +16,11 @@
 @synthesize sectionOutro = _sectionOutro;
 @synthesize sectionBuildUp = _sectionBuildUp;
 
-+ (RDJSong *)parse
++ (RDJSong *)parseJSONURL:(NSURL*)JSONFile
 {
 	RDJSong *song = [[RDJSong alloc] init];
 	
-	NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Paradise" ofType:@"json"]];
+	NSData *data = [NSData dataWithContentsOfURL:JSONFile];
 	
 	NSDictionary *jsonSerialization = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 	

@@ -17,6 +17,6 @@
 @property (nonatomic, strong) RDJSection *sectionBuildUp;
 @property (nonatomic, strong) RDJSection *sectionOutro;
 
-+ (RDJSong *)parse;
++ (RDJSong *)parseJSONURL:(NSURL*)JSONFile;
 
 @end
