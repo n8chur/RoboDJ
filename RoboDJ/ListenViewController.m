@@ -82,6 +82,8 @@
     self.songNameLabel.text = @"Loading...";
     
     // TODO: (connect to host and send) send songs to host
+	
+	[self.session setDataReceiveHandler:self withContext:NULL];
     
 }
 
@@ -207,6 +209,9 @@
 
 
 - (IBAction)likeButtonPressed:(id)sender {
+	if ([self.session sendData:[NSData dataWithBytes:"testdata" length:8] toPeers:[NSArray arrayWithObject:self.serverPeerID] withDataMode:GKSendDataReliable error:NULL]) {
+		NSLog(@"Like reported");
+	}
 }
 
 - (IBAction)dislikeButtonPressed:(id)sender {
@@ -214,6 +219,13 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
+}
+
+#pragma mark - Data Handler
+
+- (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
+{
+	NSLog(@"Received data from %@ (%@) size %d", peer, [session displayNameForPeer:peer], [data length]);
 }
 
 @end

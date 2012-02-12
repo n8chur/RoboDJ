@@ -122,6 +122,8 @@
 	NSLog(@"peedID: %@", self.session.peerID);
 	NSLog(@"sessionID: %@", self.session.sessionID);
 	NSLog(@"mode: %d", self.session.sessionMode);
+	
+	[self.session setDataReceiveHandler:self withContext:NULL];
 }
 
 - (void)viewDidUnload
@@ -446,5 +448,9 @@ return YES;
     [self skipButtonPressed:nil];
 }
 
+- (void) receiveData:(NSData *)data fromPeer:(NSString *)peer inSession: (GKSession *)session context:(void *)context
+{
+	NSLog(@"Received data from %@ (%@) size %d", peer, [session displayNameForPeer:peer], [data length]);
+}
 
 @end
