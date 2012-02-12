@@ -191,7 +191,9 @@
 
 - (void)sendNewPlayist
 {
-    
+    // send current track (self.playerManager.currentTrack) and current time for client to start (with delay compesnation) (self.playerManager.currentTime?)
+    // client should only take action if the given song is not currently playing
+    // and the new playlist (self.songsPlaylist)
 }
 
 - (void)combineListAndRequestNewPlaylist:(NSArray*)newClientList
