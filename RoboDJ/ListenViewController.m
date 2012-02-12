@@ -20,6 +20,8 @@
 
 @property (nonatomic, retain) NSMutableArray *clientUserSongs;
 
+@property (nonatomic) BOOL clientLibrarySent;
+
 - (void)playNextSongInQueue;
 - (void)playTrack;
 
@@ -45,6 +47,8 @@
 
 @synthesize serverPeerID = _serverPeerID;
 @synthesize session = _session;
+
+@synthesize clientLibrarySent = _clientLibrarySent;
 
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
@@ -139,8 +143,6 @@
     // TODO: (connect to host and send) send songs to host
 	
 	[self.session setDataReceiveHandler:self withContext:NULL];
-	
-	[self performSelector:@selector(sendClientLibrary) withObject:nil afterDelay:1.0f];
 }
 
 - (void)viewDidUnload
@@ -289,6 +291,11 @@
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
 	NSLog(@"DidChangeState");
+    if ( self.clientLibrarySent == NO ) {
+        [self sendClientLibrary];
+        self.clientLibrarySent = YES;
+    }
+    
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID

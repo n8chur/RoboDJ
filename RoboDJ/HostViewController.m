@@ -260,27 +260,36 @@
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
     // compare self.hostsUserSongs with newClientList
     // return 
+    NSLog(@"count before: %i", [newClientList count]);
     NSLog(@"Combining with new library (%d songs)", [newClientList count]);
-	
+    
+    NSMutableArray* duplicates = [self.combinedSongs mutableCopy];
+    
     for ( NSString* string in newClientList ) {
+        NSInteger arrayIndex = 0;
         for ( NSMutableSet* set in self.combinedSongs ) {
-            if ( [set containsObject:string] ) {
-                [set removeObject:string];
-                NSMutableSet* setAtNextIndex = [self.combinedSongs objectAtIndex:[self.combinedSongs indexOfObject:set]];
-                if ( setAtNextIndex == nil ) {
-                    [setAtNextIndex addObject:string];
-                    [self.combinedSongs addObject:setAtNextIndex];
-                }
-                else {
-                    [setAtNextIndex addObject:string];
+            for ( NSString* setString in set ) {
+                if ( [setString isEqualToString:string] ) {
+                    NSMutableSet* duplicateSet = [duplicates objectAtIndex:arrayIndex+1];
+                    if ( duplicateSet == nil ) {
+                        duplicateSet = [NSMutableSet setWithObject:string];
+                        [duplicates addObject:duplicateSet];
+                    }
+                    else {
+                        [duplicateSet addObject:string];
+                    }
+                    break;
                 }
             }
-            else {
-                [set addObject:string];
-            }
+            arrayIndex ++;
         }
     }
-    NSLog(@"new list combined");
+    
+    for ( NSString* string in duplicates ) {
+        
+    }
+    
+    NSLog(@"new list combined, count after: %i", [newClientList count]);
     [self addSearches];
 }
 
