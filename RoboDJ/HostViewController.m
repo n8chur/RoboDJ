@@ -230,6 +230,7 @@
     else {
         NSLog(@"No matches!");
     }
+    NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
 }
 
 - (void)performSearch
