@@ -132,18 +132,6 @@
  }
  */
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	NSString *peerID = [self.availableServers objectAtIndex:indexPath.row];
-	NSLog(@"Selected peer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
-	
-	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-	appDelegate.serverPeerID = peerID;
-	appDelegate.session = self.session;
-	
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 #pragma mark - GKSessionDelegate Protocol
 
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
@@ -172,6 +160,21 @@
 - (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
 {
 	NSLog(@"connectionWithPeerFailed");
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	
+	NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+	
+//	DetailViewController *detail = [segue destinationViewController];
+	
+	NSString *peerID = [self.availableServers objectAtIndex:selectedIndexPath.row];
+	NSLog(@"Selected peer: %@ (%@)", peerID, [self.session displayNameForPeer:peerID]);
+	
+	AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+	appDelegate.serverPeerID = peerID;
+	appDelegate.session = self.session;
+
 }
 
 @end

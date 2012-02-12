@@ -670,7 +670,6 @@
                     <connections>
                         <outlet property="contributorsLabel" destination="45b-nG-qMp" id="M9h-Ox-LP5"/>
                         <outlet property="currentTimeLabel" destination="WVJ-93-M94" id="1Tt-YN-LTk"/>
-                        <outlet property="dislikeButtonPressed" destination="Y6C-v8-1Aa" id="E5z-hS-jd3"/>
                         <outlet property="dislikesLabel" destination="Xy2-mp-Z8c" id="Fbx-73-gS2"/>
                         <outlet property="likesLabel" destination="HJ4-cn-Uaq" id="yZi-3b-WWM"/>
                         <outlet property="progressView" destination="Dy2-rs-VNV" id="luh-dj-ESg"/>
