@@ -401,7 +401,8 @@
                 }
             }
             else {
-                if ( [self.songsPlaylist count] < 10 ) {
+                [self sendNewPlayist];
+                if ( [self.songsPlaylist count] < 50 ) {
                     [self performSelectorInBackground:@selector(performSearch) withObject:nil];
                 }
             }

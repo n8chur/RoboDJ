@@ -52,6 +52,8 @@
 
 @synthesize playlist = _playlist;
 
+@synthesize clientLibrarySent = _clientLibrarySent;
+
 - (void)shuffleMutableArray:(NSMutableArray*)mutableArray
 {
     static BOOL seeded = NO;
