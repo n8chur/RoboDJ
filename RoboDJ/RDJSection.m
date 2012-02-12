@@ -24,5 +24,10 @@
     return self;
 }
 
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"type: %i, startTime: %f, duration: %f", self.type, self.startTime, self.duration];
+}
+
 @end
 
