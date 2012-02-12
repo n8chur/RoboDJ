@@ -191,6 +191,13 @@
     
 }
 
+- (void)sendNewPlayist
+{
+    // send current track (self.playerManager.currentTrack) and current time for client to start (with delay compesnation) (self.playerManager.currentTime?)
+    // client should only take action if the given song is not currently playing
+    // and the new playlist (self.songsPlaylist)
+}
+
 - (void)combineListAndRequestNewPlaylist:(NSArray*)newClientList
 {
     // add newClientList to self.combinedSongs (update keys to reflect number inside)
@@ -233,6 +240,8 @@
         NSLog(@"No matches!");
     }
     NSLog(@"searches: %i", maxSearchCount - 1 - searchCount);
+    
+    
 }
 
 - (void)performSearch
@@ -318,9 +327,8 @@
                 }
             }
             else {
-                NSLog(@"Done finding tracks!");
-                
-                if ( [self.songsPlaylist count] < 5 ) {
+                [self sendNewPlayist];
+                if ( [self.songsPlaylist count] < 25 ) {
                     [self performSearch];
                 }
             }
