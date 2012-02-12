@@ -29,6 +29,8 @@
 @synthesize netServiceBrowser = _netServiceBrowser;
 @synthesize netService = _netService;
 @synthesize services = _services;
+@synthesize server = _server;
+@synthesize client = _client;
 
 #pragma mark - View lifecycle
 
@@ -36,13 +38,13 @@
 {
     [super viewDidLoad];
     
-    self.netServiceBrowser = [[NSNetServiceBrowser alloc] init];
-    self.netServiceBrowser.delegate = self;
+//    self.netServiceBrowser = [[NSNetServiceBrowser alloc] init];
+//    self.netServiceBrowser.delegate = self;
     
-    self.netService = [[NSNetService alloc] initWithDomain:@"local" type:@"_http._tcp." name:kRoboDJName port:kRoboDJPort];
-    self.netService.delegate = self;
+//    self.netService = [[NSNetService alloc] initWithDomain:@"local" type:@"_http._tcp." name:kRoboDJName port:kRoboDJPort];
+//    self.netService.delegate = self;
     
-    self.services = [NSMutableArray array];
+//    self.services = [NSMutableArray array];
 }
 
 - (void)viewDidUnload
@@ -83,13 +85,26 @@
 
 
 - (IBAction)hostButtonPressed:(id)sender {
-    [self.netService publish];
-//    [self.netService resolveWithTimeout:10.0f];
+	//    [self.netService publish];
+	//    [self.netService resolveWithTimeout:10.0f];
+	
+	if (self.server == nil) {
+		self.server = [[BonjourServer alloc] init];
+		NSLog(@"Server: %@", self.server);
+	}
+	else {
+		[self.server run];
+		NSLog(@"Server run");
+	}
 }
 
 - (IBAction)searchButtonPressed:(id)sender {
-    NSLog(@"currently available services: %@", self.services);
-    [self.netServiceBrowser searchForServicesOfType:@"_http._tcp" inDomain:@"local"];
+	//    NSLog(@"currently available services: %@", self.services);
+	//    [self.netServiceBrowser searchForServicesOfType:@"_http._tcp" inDomain:@"local"];
+	
+	
+	BonjourClient *client = [[BonjourClient alloc] init];
+	[client searchAndConnect];
 }
 
 - (IBAction)connectButtonPressed:(id)sender {
@@ -177,95 +192,95 @@
             NSLog(@"bytesWritten: %i", bytesWritten);
             
 #if ! defined(NDEBUG)
-//            if (self.debugStallSend) {
-//                return;
-//            }
+			//            if (self.debugStallSend) {
+			//                return;
+			//            }
 #endif
             
             // If the buffer has no more data to send, refill it.
             
-//            if (self.bufferOffset == [self.buffer length]) {
-//                self.bufferOffset = 0;
-                
-//                switch (self.sendState) {
-//                    case kFileSendOperationStateStart: {
-//                        uint64_t    header;
-//                        
-//                        // Set up the buffer to send the header.
-//                        
-//                        header = OSSwapHostToBigInt64(self.fileLength);
-//                        [self.buffer setLength:0];
-//                        [self.buffer appendBytes:&header length:sizeof(header)];
-//                        
-//                        self.sendState = kFileSendOperationStateHeader;
-//                    } break;
-//                    case kFileSendOperationStateHeader:
-//                        self.sendState = kFileSendOperationStateBody;
-//                        // fall through
-//                    case kFileSendOperationStateBody: {
-//                        if (self.fileOffset < self.fileLength) {
-//                            NSUInteger  bytesToRead;
-//                            NSInteger   bytesRead;
-//                            
-//                            // Set up the buffer to send the next chunk of body data.
-//                            
-//                            if ( (self.fileLength - self.fileOffset) < (off_t) kFileSendOperationBufferSize ) {
-//                                bytesToRead = (NSUInteger) (self.fileLength - self.fileOffset);
-//                            } else {
-//                                bytesToRead = kFileSendOperationBufferSize;
-//                            }
-//                            [self.buffer setLength:bytesToRead];
-//                            bytesRead = [self.fileStream read:[self.buffer mutableBytes] maxLength:bytesToRead];
-//                            if (bytesRead < 0) {
-//                                [self finishWithError:[self.fileStream streamError]];
-//                            } else if (bytesRead == 0) {
-//                                // The file must have shrunk while we were reading it!
-//                                [self finishWithError:[NSError errorWithDomain:NSPOSIXErrorDomain code:EPIPE userInfo:nil]];
-//                            } else {
-//                                [self.buffer setLength:bytesRead];
-//                                
-//                                self.crc = crc32(self.crc, [self.buffer bytes], (uInt) [self.buffer length]);
-//                                
-//                                self.fileOffset += bytesRead;
-//                            }
-//                        } else {
-//                            uint32_t    trailer;
-//                            
-//                            // Set up the buffer to send the trailer.
-//                            
-//                            trailer = OSSwapHostToBigInt32( (uint32_t) self.crc );
-//#if ! defined(NDEBUG)
-//                            if (self.debugSendBadChecksum) {
-//                                trailer ^= 1;
-//                            }
-//#endif
-//                            [self.buffer setLength:0];
-//                            [self.buffer appendBytes:&trailer length:sizeof(trailer)];
-//                            
-//                            self.sendState = kFileSendOperationStateTrailer;
-//                        }
-//                    } break;
-//                    case kFileSendOperationStateTrailer: {
-//                        [self finishWithError:nil];
-//                    } break;
-//                }
-//            }
+			//            if (self.bufferOffset == [self.buffer length]) {
+			//                self.bufferOffset = 0;
+			
+			//                switch (self.sendState) {
+			//                    case kFileSendOperationStateStart: {
+			//                        uint64_t    header;
+			//                        
+			//                        // Set up the buffer to send the header.
+			//                        
+			//                        header = OSSwapHostToBigInt64(self.fileLength);
+			//                        [self.buffer setLength:0];
+			//                        [self.buffer appendBytes:&header length:sizeof(header)];
+			//                        
+			//                        self.sendState = kFileSendOperationStateHeader;
+			//                    } break;
+			//                    case kFileSendOperationStateHeader:
+			//                        self.sendState = kFileSendOperationStateBody;
+			//                        // fall through
+			//                    case kFileSendOperationStateBody: {
+			//                        if (self.fileOffset < self.fileLength) {
+			//                            NSUInteger  bytesToRead;
+			//                            NSInteger   bytesRead;
+			//                            
+			//                            // Set up the buffer to send the next chunk of body data.
+			//                            
+			//                            if ( (self.fileLength - self.fileOffset) < (off_t) kFileSendOperationBufferSize ) {
+			//                                bytesToRead = (NSUInteger) (self.fileLength - self.fileOffset);
+			//                            } else {
+			//                                bytesToRead = kFileSendOperationBufferSize;
+			//                            }
+			//                            [self.buffer setLength:bytesToRead];
+			//                            bytesRead = [self.fileStream read:[self.buffer mutableBytes] maxLength:bytesToRead];
+			//                            if (bytesRead < 0) {
+			//                                [self finishWithError:[self.fileStream streamError]];
+			//                            } else if (bytesRead == 0) {
+			//                                // The file must have shrunk while we were reading it!
+			//                                [self finishWithError:[NSError errorWithDomain:NSPOSIXErrorDomain code:EPIPE userInfo:nil]];
+			//                            } else {
+			//                                [self.buffer setLength:bytesRead];
+			//                                
+			//                                self.crc = crc32(self.crc, [self.buffer bytes], (uInt) [self.buffer length]);
+			//                                
+			//                                self.fileOffset += bytesRead;
+			//                            }
+			//                        } else {
+			//                            uint32_t    trailer;
+			//                            
+			//                            // Set up the buffer to send the trailer.
+			//                            
+			//                            trailer = OSSwapHostToBigInt32( (uint32_t) self.crc );
+			//#if ! defined(NDEBUG)
+			//                            if (self.debugSendBadChecksum) {
+			//                                trailer ^= 1;
+			//                            }
+			//#endif
+			//                            [self.buffer setLength:0];
+			//                            [self.buffer appendBytes:&trailer length:sizeof(trailer)];
+			//                            
+			//                            self.sendState = kFileSendOperationStateTrailer;
+			//                        }
+			//                    } break;
+			//                    case kFileSendOperationStateTrailer: {
+			//                        [self finishWithError:nil];
+			//                    } break;
+			//                }
+			//            }
             
             // Try to send the remaining bytes in the buffer.
             
-//            if ( ! [self isFinished] ) {
-//                assert(self.bufferOffset < [self.buffer length]);
-//                bytesWritten = [self.outputStream write:((const uint8_t *) [self.buffer bytes]) + self.bufferOffset maxLength:[self.buffer length] - self.bufferOffset];
-//                if (bytesWritten < 0) {
-//                    [self finishWithError:[self.outputStream streamError]];
-//                } else {
-//                    self.bufferOffset += bytesWritten;
-//                }
-//            }
+			//            if ( ! [self isFinished] ) {
+			//                assert(self.bufferOffset < [self.buffer length]);
+			//                bytesWritten = [self.outputStream write:((const uint8_t *) [self.buffer bytes]) + self.bufferOffset maxLength:[self.buffer length] - self.bufferOffset];
+			//                if (bytesWritten < 0) {
+			//                    [self finishWithError:[self.outputStream streamError]];
+			//                } else {
+			//                    self.bufferOffset += bytesWritten;
+			//                }
+			//            }
         } break;
         case NSStreamEventErrorOccurred: {
-//            assert([self.outputStream streamError] != nil);
-//            [self finishWithError:[self.outputStream streamError]];
+			//            assert([self.outputStream streamError] != nil);
+			//            [self finishWithError:[self.outputStream streamError]];
         } break;
         case NSStreamEventEndEncountered: {
             assert(NO);

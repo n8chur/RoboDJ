@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BonjourClient.h"
+#import "BonjourServer.h"
 
 @interface BonjourViewController : UIViewController 
 - (IBAction)hostButtonPressed:(id)sender;
@@ -15,5 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
+
+@property (strong, nonatomic) BonjourServer *server;
+@property (strong, nonatomic) BonjourClient *client;
 
 @end
