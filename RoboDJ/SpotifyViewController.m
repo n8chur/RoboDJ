@@ -7,17 +7,17 @@
 //
 
 #import "SpotifyViewController.h"
-//#import "SPPlaybackManager.h"
+#import "SPPlaybackManager.h"
 
 @interface SpotifyViewController ()
 
-//@property (nonatomic, retain) SPPlaybackManager* playbackManager;
+@property (nonatomic, retain) SPPlaybackManager* playbackManager;
 
 @end
 
 @implementation SpotifyViewController
 
-//@synthesize playbackManager = _playbackManager;
+@synthesize playbackManager = _playbackManager;
 
 @synthesize usernameTextField = _usernameTextField;
 @synthesize passwordTextField = _passwordTextField;
@@ -69,7 +69,7 @@
 		NSLog(@"Spotify Session: %@", [SPSession sharedSession]);
 	}
     
-//    self.playbackManager = [[[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]] autorelease];
+    self.playbackManager = [[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
 	
 	[[SPSession sharedSession] setDelegate:self];
 	[[SPSession sharedSession] setPlaybackDelegate:self];
@@ -159,14 +159,13 @@
         
         NSError *error = nil;
         
-//        if (![self.playbackManager playTrack:track error:&error]) {
-        if (![[SPSession sharedSession] playTrack:track error:&error]) {
+        if (![self.playbackManager playTrack:track error:&error]) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Play Track"
                                                             message:[error localizedDescription]
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
-            [[alert autorelease] show];
+            [alert show];
         }
         self.track = track;
         return;
@@ -177,7 +176,7 @@
 												   delegate:nil
 										  cancelButtonTitle:@"OK"
 										  otherButtonTitles:nil];
-	[[alert autorelease] show];
+	[alert show];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -189,14 +188,6 @@
     }
     else {
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameTextField.text password:self.passwordTextField.text rememberCredentials:YES];
-        
-        NSError *error = NULL;
-        if (![[SPSession sharedSession] preloadTrackForPlayback:self.track error:&error]) {
-            NSLog(@"Preload error: %@", error);
-        }
-        else {
-            NSLog(@"Preload began successfully");
-        }
         
         [textField resignFirstResponder];
     }
