@@ -279,6 +279,9 @@
                 [self performSearch];
             }
         }
+		else {
+			[self performSearch];
+		}
         
         [self.songsInSearchQueue removeObjectAtIndex:0];
     }
