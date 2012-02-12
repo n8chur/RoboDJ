@@ -104,8 +104,6 @@
 	[[NSUserDefaults standardUserDefaults] synchronize];
     self.usernameTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"];
     self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.Password"];
-    
-    [self performSearch];
 }
 
 - (void)viewDidUnload
