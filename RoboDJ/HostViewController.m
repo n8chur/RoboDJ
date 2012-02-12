@@ -138,7 +138,7 @@
     self.progressView.progress = 0.0f;
     self.songNameLabel.text = @"Loading...";
     
-    [self performSearch];
+    [self performSelectorInBackground:@selector(performSearch) withObject:nil];
 	
 	self.session = [[GKSession alloc] initWithSessionID:@"_robotDJ.tcp." displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModeServer];
 	self.session.delegate = self;
@@ -239,7 +239,7 @@
         searchCount --;
     }
     if ( searchCount == maxSearchCount - 1 ) {
-        [self performSearch];
+        [self performSelectorInBackground:@selector(performSearch) withObject:nil];
     }
     else {
         NSLog(@"No matches!");
@@ -276,33 +276,38 @@
 
 - (void)performSearch
 {
-    if ( [self.songsInSearchQueue count] != 0 ) {
-        NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
-        NSLog(@"searchString: %@", searchString);
-        if ( searchString != self.lastSearch ) {
-            if ( searchString ) {
-                if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
-                    [self.previouslySearchedTracks addObject:searchString];
-                    self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
-                    NSLog(@"new search");
-                    [self.songsInSearchQueue removeObjectAtIndex:0];
+    if ( self.search.searchInProgress ) {
+        [self performSelector:@selector(performSearch) withObject:nil afterDelay:2.0f];
+    }
+    else {
+        if ( [self.songsInSearchQueue count] != 0 ) {
+            NSString* searchString = [self.songsInSearchQueue objectAtIndex:0];
+            NSLog(@"searchString: %@", searchString);
+            if ( searchString != self.lastSearch ) {
+                if ( searchString ) {
+                    if ( [self.previouslySearchedTracks containsObject:searchString] == NO ) {
+                        [self.previouslySearchedTracks addObject:searchString];
+                        self.search = [SPSearch searchWithSearchQuery:searchString inSession:[SPSession sharedSession]];
+                        NSLog(@"new search");
+                        [self.songsInSearchQueue removeObjectAtIndex:0];
+                    }
+                    else {
+                        [self.songsInSearchQueue removeObjectAtIndex:0];
+                        [self performSearch];
+                        NSLog(@"already searched");
+                    }
                 }
                 else {
                     [self.songsInSearchQueue removeObjectAtIndex:0];
                     [self performSearch];
-                    NSLog(@"already searched");
+                    NSLog(@"Search string invalid");
                 }
             }
             else {
-                [self.songsInSearchQueue removeObjectAtIndex:0];
-                [self performSearch];
-                NSLog(@"Search string invalid");
+                [self performSelector:@selector(performSearch) withObject:nil afterDelay:2.0f];
             }
+            
         }
-        else {
-            [self performSelector:@selector(performSearch) withObject:nil afterDelay:2.0f];
-        }
-        
     }
 }
 
@@ -379,12 +384,12 @@
             else {
                 [self sendNewPlayist];
                 if ( [self.songsPlaylist count] < 25 ) {
-                    [self performSearch];
+                    [self performSelectorInBackground:@selector(performSearch) withObject:nil];
                 }
             }
             
             if ( [self.songsInSearchQueue count] > 0 ) {
-                [self performSearch];
+                [self performSelectorInBackground:@selector(performSearch) withObject:nil];
             }
         }
     }
