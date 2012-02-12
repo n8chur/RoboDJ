@@ -99,7 +99,7 @@
 	
 	[[SPSession sharedSession] setDelegate:self];
     
-    [self.search addObserver:self forKeyPath:@"searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"search.searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
     self.usernameTextField.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"Spotify.UserName"];
@@ -108,7 +108,7 @@
 
 - (void)viewDidUnload
 {
-    [self.search removeObserver:self forKeyPath:@"searchInProgress"];
+    [self removeObserver:self forKeyPath:@"search.searchInProgress"];
     
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
@@ -205,7 +205,7 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"searchInProgress"]) {
+    if ([keyPath isEqualToString:@"search.searchInProgress"]) {
         NSLog(@"searchInProgress: %i", self.search.searchInProgress);
         if ( self.search.searchInProgress == NO ) {
             NSLog(@"Session did change meta data. tracks in search: %@", self.search.tracks);
