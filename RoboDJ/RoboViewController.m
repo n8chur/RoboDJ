@@ -90,9 +90,6 @@
     [self.audioPlayerA setVolume:kGlobalVolume];
     [self.audioPlayerB setVolume:kGlobalVolume];
     
-    [self.audioPlayerA prepareToPlay];
-    [self.audioPlayerB prepareToPlay];
-    
     self.mixerSlider.value = 0.0f;
     self.mixAmount = 0.0f;
     
@@ -188,7 +185,7 @@
 - (void)transition
 {
     if ( self.mixAmount < 0.99f ) {
-        self.mixAmount += (1.0f/60.0f)/10;
+        self.mixAmount += (1.0f/60.0f)/20;
     }
     else {
         self.mixAmount = 1.0f;
@@ -199,16 +196,10 @@
     }
 }
 
-- (void)transitionToBAtSongATime:(NSTimeInterval)startTime
+- (void)transitionToBWithDelay:(NSTimeInterval)delay
 {
+    [self.audioPlayerB playAtTime:self.audioPlayerA.deviceCurrentTime + delay];
     self.transitionInProgress = YES;
-    
-    [self.audioPlayerB setCurrentTime:self.songB.sectionBuildUp.startTime];
-    [self.audioPlayerB prepareToPlay];
-    
-    NSTimeInterval timeTillTransition =  self.audioPlayerA.currentTime - startTime;
-    [self.audioPlayerB playAtTime:self.audioPlayerB.deviceCurrentTime + timeTillTransition];
-    
     self.transitionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(transition) userInfo:nil repeats:YES];
 }
 
@@ -217,8 +208,8 @@
     if ( self.transitionInProgress == NO ) {
         NSTimeInterval delay = 0.2f;
         if ( self.audioPlayerA.currentTime >= self.songA.sectionOutro.startTime - delay) {
-            NSLog(@"entering outro at: %f", self.audioPlayerA.currentTime);
-            [self transitionToBAtSongATime:self.songA.sectionOutro.startTime];
+            delay = self.songA.sectionOutro.startTime - self.audioPlayerA.currentTime;
+            [self transitionToBWithDelay:delay];
             [self.audioPlayerATimeCheckTimer invalidate];
         }
     }
@@ -226,10 +217,13 @@
 
 - (void)playAudioPlayerA
 {
-    NSTimeInterval secondBeforeOutro = self.songA.sectionOutro.startTime - 2;
-    [self.audioPlayerA setCurrentTime:secondBeforeOutro];
+    NSTimeInterval secondsBeforeOutro = self.songA.sectionOutro.startTime - 2;
+    [self.audioPlayerA setCurrentTime:secondsBeforeOutro];
     [self.audioPlayerA prepareToPlay];
     [self.audioPlayerA play];
+    
+    [self.audioPlayerB setCurrentTime:self.songB.sectionBuildUp.startTime];
+    [self.audioPlayerB prepareToPlay];
     
     self.audioPlayerATimeCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(audioPlayerACheckTime) userInfo:nil repeats:YES];
 }
