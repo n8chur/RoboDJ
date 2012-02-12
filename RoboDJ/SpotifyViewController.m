@@ -96,10 +96,14 @@
     self.songsPlaylist = [NSMutableArray array];
 	
 	[[SPSession sharedSession] setDelegate:self];
+    
+    [self.search addObserver:self forKeyPath:@"searchInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidUnload
 {
+    [self.search removeObserver:self forKeyPath:@"searchInProgress"];
+    
     [self setUsernameTextField:nil];
     [self setPasswordTextField:nil];
     [self setLoginStatusLabel:nil];
@@ -194,6 +198,29 @@
 	[alert show];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"searchInProgress"]) {
+        NSLog(@"searchInProgress: %i", self.search.searchInProgress);
+        if ( self.search.searchInProgress == NO ) {
+            NSLog(@"Session did change meta data. tracks in search: %@", self.search.tracks);
+            if ( [self.search.tracks count] > 0 ) {
+                [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
+                if ( !self.playbackManager.isPlaying ) {
+                    [self playNextSongInQueue];
+                }
+            }
+            else {
+                NSLog(@"Done finding tracks!");
+            }
+            
+            if ( [self.songsInSearchQueue count] > 0 ) {
+                [self performSearch];
+            }
+            self.queueTextView.text = [NSString stringWithFormat:@"%@",self.songsPlaylist];
+        }
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -225,24 +252,7 @@
 
 - (void)sessionDidChangeMetadata:(SPSession *)aSession
 {
-    NSLog(@"Session did change meta data. tracks in search: %@", self.search.tracks);
-    
-    if ( [self.search.tracks count] > 0 ) {
-        [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
-        if ( !self.playbackManager.isPlaying ) {
-            [self playNextSongInQueue];
-        }
-    }
-    else {
-        NSLog(@"Done finding tracks!");
-    }
-    
-    if ( [self.songsInSearchQueue count] > 0 ) {
-        if ( !self.search.searchInProgress ) {
-            [self performSearch];
-        }
-    }
-    self.queueTextView.text = [NSString stringWithFormat:@"%@",self.songsPlaylist];
+    NSLog(@"Metadata changed.");
 }
 
 - (void)sessionDidLosePlayToken:(SPSession *)aSession
