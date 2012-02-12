@@ -380,10 +380,6 @@
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
-				46BC0CE514E7695300C503DE /* SystemConfiguration.framework */,
-				46BC0CE314E7694200C503DE /* MediaPlayer.framework */,
-				46BC0CE114E7693000C503DE /* MobileCoreServices.framework */,
-				46BC0CDF14E7692500C503DE /* libz.dylib */,
 				46F128E714E723AD003B6AF1 /* Audio */,
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
 				46EE00FB14E71A5B00299BD8 /* Frameworks */,
@@ -403,6 +399,10 @@
 		46EE00FB14E71A5B00299BD8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46BC0CE514E7695300C503DE /* SystemConfiguration.framework */,
+				46BC0CE314E7694200C503DE /* MediaPlayer.framework */,
+				46BC0CE114E7693000C503DE /* MobileCoreServices.framework */,
+				46BC0CDF14E7692500C503DE /* libz.dylib */,
 				AEF8B49914E735E200E006B4 /* CFNetwork.framework */,
 				AEF8B49714E735C700E006B4 /* AudioToolbox.framework */,
 				AEF8B49514E735B300E006B4 /* CoreAudio.framework */,

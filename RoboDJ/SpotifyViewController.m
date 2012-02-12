@@ -7,24 +7,42 @@
 //
 
 #import "SpotifyViewController.h"
+
+#import "CocoaLibSpotify.h"
 #import "SPPlaybackManager.h"
 
-@interface SpotifyViewController ()
+@interface SpotifyViewController () <SPSessionDelegate, SPSessionPlaybackDelegate>
 
 @property (nonatomic, retain) SPPlaybackManager* playbackManager;
+@property (nonatomic, retain) SPTrack *track;
+@property (nonatomic, retain) SPSearch *search;
+
+@property (nonatomic, retain) NSMutableArray *songsInSearchQueue;
+
+@property (nonatomic, retain) NSMutableArray *songsPlaylist;
+
+- (void)performSearch;
+
+- (void)playNextSongInQueue;
+
+- (void)playTrack;
 
 @end
 
 @implementation SpotifyViewController
 
 @synthesize playbackManager = _playbackManager;
+@synthesize track = _track;
+@synthesize search = _search;
 
 @synthesize usernameTextField = _usernameTextField;
 @synthesize passwordTextField = _passwordTextField;
-@synthesize track = _track;
 @synthesize checkTrackButton = _checkTrackButton;
 @synthesize playTrackButton = _playTrackButton;
 @synthesize loginStatusLabel = _loginStatusLabel;
+
+@synthesize songsInSearchQueue = _songsInSearchQueue;
+@synthesize songsPlaylist = _songsPlaylist;
 
 #pragma mark - View lifecycle
 
@@ -58,21 +76,26 @@
 		0xA6,
 	};
 	const size_t g_appkey_size = sizeof(g_appkey);
-	
-	if (![SPSession sharedSession]) {
-		NSData *appKey = [NSData dataWithBytes:g_appkey length:g_appkey_size];
-		NSError *error = NULL;
-		[SPSession initializeSharedSessionWithApplicationKey:appKey userAgent:@"com.westinnewell.RobotDJ" error:&error];
-		if (error != NULL) {
-			NSLog(@"Error: %@", [error localizedDescription]);
-		}
-		NSLog(@"Spotify Session: %@", [SPSession sharedSession]);
-	}
+    
+    [SPSession initializeSharedSessionWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size] 
+											   userAgent:@"com.westinnewell.RobotDJ"
+												   error:nil];
     
     self.playbackManager = [[SPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
+    
+    NSURL *trackURL = [NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"];
+    self.track = [[SPSession sharedSession] trackForURL:trackURL];
+    
+    self.songsInSearchQueue = [NSMutableArray array];
+    [self.songsInSearchQueue addObject:@"n8chur anglerfish"];
+    [self.songsInSearchQueue addObject:@"n8chur gasps and fissure"];
+    [self.songsInSearchQueue addObject:@"datsik swagga"];
+    [self.songsInSearchQueue addObject:@"neon steve hello"];
+    [self.songsInSearchQueue addObject:@"Knife Party"];
+    
+    self.songsPlaylist = [NSMutableArray array];
 	
 	[[SPSession sharedSession] setDelegate:self];
-	[[SPSession sharedSession] setPlaybackDelegate:self];
 }
 
 - (void)viewDidUnload
@@ -82,6 +105,7 @@
     [self setCheckTrackButton:nil];
     [self setPlayTrackButton:nil];
     [self setLoginStatusLabel:nil];
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -113,38 +137,26 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)checkTrack:(id)sender
+- (void)performSearch
 {
-	NSLog(@"track: %@", self.track);
-    
-	if ([self.track isLoaded]) {
-		NSLog(@"track: loaded");		
-	}
-	else {
-		NSLog(@"track: NOT loaded");		
-	}
-	
-	if ([self.track availability] == SP_TRACK_AVAILABILITY_AVAILABLE) {
-		NSLog(@"track: available");		
-	}
-	else if ([self.track availability] == SP_TRACK_AVAILABILITY_UNAVAILABLE) {
-		NSLog(@"track: UNavailable");		
-	}
-	else if ([self.track availability] == SP_TRACK_AVAILABILITY_NOT_STREAMABLE) {
-		NSLog(@"track: not streamable");		
-	}
-	else if ([self.track availability] == SP_TRACK_AVAILABILITY_BANNED_BY_ARTIST) {
-		NSLog(@"track: banned");		
-	}
-	
-	NSLog(@"track: album: %@", [[self.track album] name]);
+    if ( [self.songsInSearchQueue count] != 0 ) {
+        self.search = [SPSearch searchWithSearchQuery:[self.songsInSearchQueue objectAtIndex:0] inSession:[SPSession sharedSession]];
+        [self.songsInSearchQueue removeObjectAtIndex:0];
+    }
 }
 
-- (void)playTrack:(id)sender
+- (void)playNextSongInQueue
+{
+    SPTrack* track = [self.songsPlaylist objectAtIndex:0];
+    [self.songsPlaylist removeObject:track];
+    self.track = [SPTrack trackForTrackURL:track.spotifyURL inSession:[SPSession sharedSession]];
+    [self playTrack];
+}
+
+- (void)playTrack
 {
 	// Invoked by clicking the "Play" button in the UI.
-    NSURL *trackURL = [NSURL URLWithString:@"spotify:track:2f5PEKVrNEHL1X0dtMNgYu"];
-    SPTrack *track = [[SPSession sharedSession] trackForURL:trackURL];
+    SPTrack *track = [[SPSession sharedSession] trackForURL:self.track.spotifyURL];
     
     if (track != nil) {
         
@@ -153,7 +165,7 @@
             // we may have to wait for a moment before playing. Tracks that are present 
             // in the user's "library" (playlists, starred, inbox, etc) are automatically loaded
             // on login. All this happens on an internal thread, so we'll just try again in a moment.
-            [self performSelector:@selector(playTrack:) withObject:sender afterDelay:0.1];
+            [self performSelector:@selector(playTrack:) withObject:nil afterDelay:0.1];
             return;
         }
         
@@ -208,7 +220,26 @@
 	NSLog(@"Error login: %@", [error localizedDescription]);
 }
 
-#pragma mark - SPSessionPlaybackDelegate Protocol
+- (void)sessionDidChangeMetadata:(SPSession *)aSession
+{
+    NSLog(@"Session did change meta data. tracks in search: %@", self.search.tracks);
+    
+    if ( [self.search.tracks count] > 0 ) {
+        [self.songsPlaylist addObject:[self.search.tracks objectAtIndex:0]];
+        if ( !self.playbackManager.isPlaying ) {
+            [self playNextSongInQueue];
+        }
+    }
+    else {
+        NSLog(@"Done finding tracks!");
+    }
+    
+    if ( [self.songsInSearchQueue count] > 0 ) {
+        if ( !self.search.searchInProgress ) {
+            [self performSearch];
+        }
+    }
+}
 
 - (void)sessionDidLosePlayToken:(SPSession *)aSession
 {
@@ -218,11 +249,13 @@
 - (void)sessionDidEndPlayback:(SPSession *)aSession
 {
 	NSLog(@"sessionDidEndPlayback");
+    
+    [self playNextSongInQueue];
 }
 
 - (NSInteger)session:(SPSession *)aSession shouldDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount format:(const sp_audioformat *)audioFormat
 {
-    //	NSLog(@"shouldDeliverAudioFrames: %d", frameCount);
+	NSLog(@"shouldDeliverAudioFrames: %d", frameCount);
 	return frameCount;
 }
 
