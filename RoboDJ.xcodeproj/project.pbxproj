@@ -71,6 +71,8 @@
 		46F128ED14E72442003B6AF1 /* Say.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 46F128EC14E72442003B6AF1 /* Say.mp3 */; };
 		46F128EF14E7257E003B6AF1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128EE14E7257D003B6AF1 /* AVFoundation.framework */; };
 		46F128F314E728F4003B6AF1 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F128F214E728F4003B6AF1 /* CoreMedia.framework */; };
+		AE4AEFE314E88B0D00742DE1 /* Match Box Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4AEFE214E88B0D00742DE1 /* Match Box Icon.png */; };
+		AE4AEFE514E88B3500742DE1 /* Match Box Icon Small.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4AEFE414E88B3500742DE1 /* Match Box Icon Small.png */; };
 		AE67FF0814E7781B00BC312F /* RDJSong.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF0714E7781B00BC312F /* RDJSong.m */; };
 		AE67FF0B14E7786D00BC312F /* RDJSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE67FF0A14E7786D00BC312F /* RDJSection.m */; };
 		AE67FF0E14E77DE200BC312F /* Paradise.json in Resources */ = {isa = PBXBuildFile; fileRef = AE67FF0C14E77DE200BC312F /* Paradise.json */; };
@@ -219,6 +221,8 @@
 		46F128EC14E72442003B6AF1 /* Say.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Say.mp3; sourceTree = "<group>"; };
 		46F128EE14E7257D003B6AF1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		46F128F214E728F4003B6AF1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		AE4AEFE214E88B0D00742DE1 /* Match Box Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Match Box Icon.png"; sourceTree = "<group>"; };
+		AE4AEFE414E88B3500742DE1 /* Match Box Icon Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Match Box Icon Small.png"; sourceTree = "<group>"; };
 		AE67FF0614E7781B00BC312F /* RDJSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDJSong.h; sourceTree = "<group>"; };
 		AE67FF0714E7781B00BC312F /* RDJSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDJSong.m; sourceTree = "<group>"; };
 		AE67FF0914E7786C00BC312F /* RDJSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDJSection.h; sourceTree = "<group>"; };
@@ -453,6 +457,8 @@
 		46EE00ED14E71A5B00299BD8 = {
 			isa = PBXGroup;
 			children = (
+				AE4AEFE414E88B3500742DE1 /* Match Box Icon Small.png */,
+				AE4AEFE214E88B0D00742DE1 /* Match Box Icon.png */,
 				AED4DB1914E83B6800EEC1C9 /* GameKit.framework */,
 				46F128E714E723AD003B6AF1 /* Audio */,
 				46EE010214E71A5B00299BD8 /* RoboDJ */,
@@ -636,6 +642,8 @@
 				46C6035A14E8236E00A4E767 /* bg.png in Resources */,
 				46C6035B14E8236E00A4E767 /* bg@2x.png in Resources */,
 				46C6035F14E827A700A4E767 /* spotify.png in Resources */,
+				AE4AEFE314E88B0D00742DE1 /* Match Box Icon.png in Resources */,
+				AE4AEFE514E88B3500742DE1 /* Match Box Icon Small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
